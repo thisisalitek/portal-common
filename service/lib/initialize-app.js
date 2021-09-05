@@ -80,19 +80,19 @@ if(process.argv[2]=='localhost' || process.argv[2]=='-l' || process.argv[2]=='-d
 	global.config.status=global.config.status || 'release'
 }
 
-global.util = require(path.join(__root,'/lib/util'))
-global.mail = require(path.join(__root,'/lib/mail'))
+global.util = require('./util')
+global.mail = require('./mail')
 
 global.taskHelper={}
-if(fs.existsSync(path.join(__root,'/lib/taskhelper')))
-	global.taskHelper=require(path.join(__root,'/lib/taskhelper'))
+if(fs.existsSync('./taskhelper'))
+	global.taskHelper=require('./taskhelper')
 
 global.restServices={}
-if(fs.existsSync(path.join(__root,'/lib/rest-helper')))
+if(fs.existsSync('./rest-helper'))
 	Object.keys(config.restServices || {}).forEach((key)=>{
 		if(config.restServices[key].enabled===true){
 			let uri=config.restServices[key].url || config.restServices[key].uri || ''
-			global.restServices[key]=require(path.join(__root,'/lib/rest-helper'))(uri)
+			global.restServices[key]=require('./rest-helper')(uri)
 		}
 	})
 

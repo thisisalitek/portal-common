@@ -1,0 +1,100 @@
+{
+    "dashboard" : true,
+    "invoice" : {
+        "outbox" : true,
+        "inbox" : true,
+        "gibUsers" : true,
+        "customers" : true,
+        "vendors" : true
+    },
+    "despatch" : {
+        "outbox" : true,
+        "inbox" : true,
+        "gibUsers" : true,
+        "customers" : true,
+        "vendors" : true
+    },
+    "orders" : {
+        "outbox" : true,
+        "inbox" : true,
+        "waitingSaleOrders" : true,
+        "customers" : true,
+        "vendors" : true
+    },
+    "mrp" : {
+        "productionOrders" : true,
+        "productionOrdersPlan" : true,
+        "waitingSaleOrders" : true,
+        "products" : true,
+        "semiProducts" : true,
+        "materialPlanning" : true,
+        "raports" : {
+            "productionAnalize" : true,
+            "costAnalize" : true
+        },
+        "defines" : {
+            "rawMaterials" : true,
+            "helperMaterials" : true,
+            "stations" : true,
+            "machineGroups" : true,
+            "machines" : true,
+            "moldGroups" : true,
+            "molds" : true,
+            "processSteps" : true,
+            "breakReasons" : true
+        }
+    },
+    "inventory" : {
+        "items" : true,
+        "inventory" : true,
+        "inventoryFiches" : true,
+        "defines" : {
+            "palletTypes" : true,
+            "pallets" : true,
+            "packingTypes" : true
+        }
+    },
+    "finance" : {
+        "customers" : true,
+        "vendors" : true,
+        "flow" : true,
+        "balances" : true,
+        "casing" : true,
+        "bank" : true
+    },
+    "accounting" : {
+        "accounts" : true,
+        "accountGroups" : true,
+        "entry" : true,
+        "flow" : true,
+        "ledger" : true
+    },
+    "posDevice" : {
+        "transfer" : true,
+        "reports" : {
+            "rapor1" : true,
+            "rapor2" : true
+        },
+        "defines" : {
+            "devices" : true,
+            "services" : true
+        }
+    },
+    "settings" : {
+        "locations" : true,
+        "subLocations" : true,
+        "shifts" : true,
+        "persons" : true,
+        "printDesigns" : true,
+        "integrators" : true,
+        "programs" : true,
+        "workingParams" : {
+            "general" : true,
+            "private" : true
+        }
+    },
+    "system" : {
+        "dbdefines" : true,
+        "tasks" : true
+    }
+}

@@ -1,0 +1,84 @@
+@font-face {
+    font-family: 'Gany Sans';
+    src: url('../ganyfonts/ganyfont-extrabold.eot');
+    src: local('Gany Sans ExtraBold'), local('ganyfont-extrabold'),
+        url('../ganyfonts/ganyfont-extrabold.eot?#iefix') format('embedded-opentype'),
+        url('../ganyfonts/ganyfont-extrabold.woff2') format('woff2'),
+        url('../ganyfonts/ganyfont-extrabold.woff') format('woff'),
+        url('../ganyfonts/ganyfont-extrabold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gany Sans';
+    src: url('../ganyfonts/ganyfont-black.eot');
+    src: local('Gany Sans Black'), local('ganyfont-black'),
+        url('../ganyfonts/ganyfont-black.eot?#iefix') format('embedded-opentype'),
+        url('../ganyfonts/ganyfont-black.woff2') format('woff2'),
+        url('../ganyfonts/ganyfont-black.woff') format('woff'),
+        url('../ganyfonts/ganyfont-black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gany Sans';
+    src: url('../ganyfonts/ganyfont-bold.eot');
+    src: local('Gany Sans Bold'), local('ganyfont-bold'),
+        url('../ganyfonts/ganyfont-bold.eot?#iefix') format('embedded-opentype'),
+        url('../ganyfonts/ganyfont-bold.woff2') format('woff2'),
+        url('../ganyfonts/ganyfont-bold.woff') format('woff'),
+        url('../ganyfonts/ganyfont-bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gany Sans';
+    src: url('../ganyfonts/ganyfont-light.eot');
+    src: local('Gany Sans Light'), local('ganyfont-light'),
+        url('../ganyfonts/ganyfont-light.eot?#iefix') format('embedded-opentype'),
+        url('../ganyfonts/ganyfont-light.woff2') format('woff2'),
+        url('../ganyfonts/ganyfont-light.woff') format('woff'),
+        url('../ganyfonts/ganyfont-light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gany Sans';
+    src: url('../ganyfonts/ganyfont-medium.eot');
+    src: local('Gany Sans Medium'), local('ganyfont-medium'),
+        url('../ganyfonts/ganyfont-medium.eot?#iefix') format('embedded-opentype'),
+        url('../ganyfonts/ganyfont-medium.woff2') format('woff2'),
+        url('../ganyfonts/ganyfont-medium.woff') format('woff'),
+        url('../ganyfonts/ganyfont-medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gany Sans';
+    src: url('../ganyfonts/ganyfont-semibold.eot');
+    src: local('Gany Sans SemiBold'), local('ganyfont-semibold'),
+        url('../ganyfonts/ganyfont-semibold.eot?#iefix') format('embedded-opentype'),
+        url('../ganyfonts/ganyfont-semibold.woff2') format('woff2'),
+        url('../ganyfonts/ganyfont-semibold.woff') format('woff'),
+        url('../ganyfonts/ganyfont-semibold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gany Sans';
+    src: url('../ganyfonts/ganyfont-regular.eot');
+    src: local('Gany Sans Regular'), local('ganyfont-regular'),
+        url('../ganyfonts/ganyfont-regular.eot?#iefix') format('embedded-opentype'),
+        url('../ganyfonts/ganyfont-regular.woff2') format('woff2'),
+        url('../ganyfonts/ganyfont-regular.woff') format('woff'),
+        url('../ganyfonts/ganyfont-regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
