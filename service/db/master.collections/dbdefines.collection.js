@@ -1,12 +1,12 @@
 module.exports=function(conn){
 	let collectionName=path.basename(__filename,'.collection.js')
 	let schema = mongoose.Schema({
-		owner: {type: mongoose.Schema.Types.ObjectId, ref: 'members', default: null, index:true},
+		owner: {type: mongoose.Schema.Types.ObjectId, ref: 'portal_members', default: null, index:true},
     dbName: {type: String, required: true, index:true},
     userDb: {type: String, default: "", index:true},    //kullanici icin acilan mongodb ismi
     userDbHost: {type: String,  default: "mongodb://localhost:27017/", index:true},  //kullanicin veri tabaninin bulundugu mongo server address
     authorizedMembers:[{
-        memberId:{type: mongoose.Schema.Types.ObjectId, ref: 'members', default: null, index:true},
+        memberId:{type: mongoose.Schema.Types.ObjectId, ref: 'portal_members', default: null, index:true},
         canRead:{type: Boolean, default: true},
         canWrite:{type: Boolean, default: false},
         canDelete:{type: Boolean, default: false}

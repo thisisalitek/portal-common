@@ -1,11 +1,12 @@
 module.exports=(cb)=>{
-
 	global.fs=require('fs')
 	global.path=require('path')
-	
+	global.appName=require(path.join(__root,'package.json')).name
 	global.os=require('os')
+
 	global.moment=require('./moment')
 	global.moment.updateLocale('tr')
+
 	require('colors')
 
 
@@ -22,6 +23,7 @@ module.exports=(cb)=>{
 		var s= yyyymmddhhmmss(new Date())
 		return s
 
+		
 		function yyyymmddhhmmss(tarih) {
 			var yyyy = tarih.getFullYear().toDigit(4)
 			var mm = (tarih.getMonth() + 1).toDigit(2)
@@ -44,40 +46,11 @@ module.exports=(cb)=>{
 
 
 	global.config={}
-	
 	if(fs.existsSync(path.join(__root,'config.json'))){
-		config=require(path.join(__root,'config.json'))
+		global.config=require(path.join(__root,'config.json'))
 	}else{
 		throw {code:'CONFIG_ERROR',message:`config.json dosyasi bulunamadi`}
 		process.exit()
-	}
-
-
-	let commonConfig={}
-
-	if((config.config_file || '')!=''){
-		if(fs.existsSync(config.config_file)){
-			commonConfig=require(config.config_file)
-		}else{
-			throw {code:'COMMON_CONFIG_ERROR',message:`${config.config_file} dosyasi bulunamadi`}
-			process.exit()
-		}
-	}
-
-	
-
-	Object.keys(commonConfig || {}).forEach((key)=>{
-		if(key!='apps')
-			config[key]=commonConfig[key]
-	})
-
-	
-	let appName=config.name
-
-	if(commonConfig.apps!=undefined){
-		Object.keys(commonConfig.apps[appName] || {}).forEach((key)=>{
-			global.config[key]=commonConfig.apps[appName][key]
-		})
 	}
 
 
@@ -88,21 +61,7 @@ module.exports=(cb)=>{
 	}
 
 	global.util = require('./util')
-	global.mail = require('./mail')
 
-	
-	global.taskHelper={}
-	if(fs.existsSync('./taskhelper'))
-		global.taskHelper=require('./taskhelper')
-
-	global.restServices={}
-	if(fs.existsSync('./rest-helper'))
-		Object.keys(config.restServices || {}).forEach((key)=>{
-			if(config.restServices[key].enabled===true){
-				let uri=config.restServices[key].url || config.restServices[key].uri || ''
-				global.restServices[key]=require('./rest-helper')(uri)
-			}
-		})
 
 	console.log('-'.repeat(70))
 	console.log(`${'Application Name:'.padding(25)} ${(config.name || '').brightYellow}`)
@@ -111,18 +70,14 @@ module.exports=(cb)=>{
 
 	if(config.base_uri)
 		console.log(`${'Base URI:'.padding(25)} ${config.base_uri.cyan}`)
+	if(config.api)
+		console.log(`${'API URI:'.padding(25)} ${config.api.url.brightYellow}`)
+	if(config.login)
+		console.log(`${'Login Url:'.padding(25)} ${config.login.url.brightYellow}`)
 
-	
-	Object.keys(config.mongodb || {}).forEach((key)=>{
-		console.log(`${key.padding(25)} ${config.mongodb[key].brightYellow}`)
-	})
-
-	console.log(`${'Passport API:'.padding(25)} ${(config.passport_api || '').cyan}`)
-	console.log(`${'Passport Login:'.padding(25)} ${(config.passport_login || '').cyan}`)
 	console.log(`${'Temp folder:'.padding(25)} ${config.tmpDir.yellow}`)
 	console.log(`${'Running Mode:'.padding(25)} ${config.status.toUpperCase().cyan}`)
 	console.log(`${'Uptime Started:'.padding(25)} ${simdi().yellow}`)
 	console.log('-'.repeat(70))
-
 	cb()
 }

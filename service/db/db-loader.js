@@ -108,15 +108,6 @@ global.dbnull=(doc,cb,msg='Kayıt bulunamadı')=>{
 	}
 }
 
-mongoose.set('debug', false)
-
-process.on('SIGINT', function() {  
-	mongoose.connection.close(function () { 
-		eventLog('Mongoose default connection disconnected through app termination') 
-		process.exit(0) 
-	}) 
-}) 
-
 global.epValidateSync=(doc,cb)=>{
 	var err = doc.validateSync()
 	if(err){
@@ -139,6 +130,15 @@ global.epValidateSync=(doc,cb)=>{
 		return true
 	}
 }
+
+mongoose.set('debug', false)
+
+process.on('SIGINT', function() {  
+	mongoose.connection.close(function () { 
+		eventLog('Mongoose default connection disconnected through app termination') 
+		process.exit(0) 
+	}) 
+}) 
 
 global.db={
 	dbName:'@MasterDb',
