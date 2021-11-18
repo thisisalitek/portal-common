@@ -1,0 +1,108 @@
+{
+	"index":[
+		{
+			"type": "grid",
+			"fields": {
+				"machineGroup":{
+					"text":"Grubu", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/mrp-machine-groups",
+						"label":"{name}"
+					}
+				},
+				"station":{
+					"text":"Istasyon", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/mrp-stations",
+						"label":"{name}"
+					}
+				},
+				"name":{"text":"Adı", "type":"string"},
+				"description":{"text":"Açıklama", "type":"string"},
+				"minCapacity":{"text":"Min. Kapasite", "type":"number"},
+				"minCapacity":{"text":"Max. Kapasite", "type":"number"},
+				"power":{"text":"Güç(watt)", "type":"number"},
+				"account":{"text":"Muhasebe Kodu", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/accounts",
+						"label":"{accountCode} - {name}"
+					}
+				},
+				"passive":{"text":"Pasif?", "type":"boolean"}
+			},
+			"options": {
+				"selection": true,
+				"filter": true,
+				"buttons": {
+					"add": true,
+					"edit": true,
+					"delete": true,
+					"view": false,
+					"print": false,
+					"copy": true
+				}
+			},
+			"dataSource": {
+				"type":"remote",
+				"method":"GET",
+				"url":"/dbapi/mrp-machines"
+			}
+		}
+	],
+	"form": [
+		{
+			"type":"form",
+			"fields": {
+				"machineGroup":{
+					"text":"Grubu", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/mrp-machine-groups",
+						"label":"{name}"
+					},
+					"lastRecord":true
+				},
+				"station":{
+					"text":"Istasyon", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/mrp-stations",
+						"label":"{name}"
+					},
+					"lastRecord":true
+				},
+				"name":{"text":"Adı", "type":"string"},
+				"description":{"text":"Açıklama", "type":"string"},
+				"minCapacity":{"text":"Min. Kapasite", "type":"number"},
+				"minCapacity":{"text":"Max. Kapasite", "type":"number"},
+				"power":{"text":"Güç(watt)", "type":"number"},
+				"account":{"text":"Muhasebe Kodu", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/accounts",
+						"label":"{accountCode} - {name}"
+					},
+					"lastRecord":true
+				},
+				"passive":{"text":"Pasif?", "type":"boolean"}
+			},
+			"options": {
+				"mode": "general",
+				"isForm":true
+			},
+			"dataSource": {
+				"method":"GET",
+				"url":"/dbapi/mrp-machines"
+			}
+		}
+	]
+}

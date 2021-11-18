@@ -34,10 +34,7 @@ function request(apiUrl,req,res,cb){
 		'Content-Type':'application/json; charset=utf-8',
 		'token':token
 	}
-
-	console.log(`api headers:`,headers)
-	console.log(`apiUrl:`,apiUrl)
-
+	
 	let data=req.query || {}
 	data=Object.assign({},data,req.body || {})
 

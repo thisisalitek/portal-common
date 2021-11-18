@@ -1,0 +1,55 @@
+{
+	"index":[
+		{
+			"type": "grid",
+			"fields": {
+				"level" : {"text":"level", "type":"number","visible":false},
+				"accountCodeName" : {"text":"Hesap", "type":"string", "html":"${level>0?'&nbsp;'.repeat(level*4)+'↳&nbsp;':''}${accountCode} ${name}"},
+				"balance" : {"text":"Bakiye", "type":"money"}
+			},
+			"options": {
+				"selection": true,
+				"filter": true,
+				"buttons": {
+					"add": true,
+					"edit": true,
+					"delete": true,
+					"view": false,
+					"print": false,
+					"copy": true
+				}
+			},
+			"dataSource": {
+				"type":"remote",
+				"method":"GET",
+				"url":"/dbapi/accounts"
+			}
+		}
+	],
+	"form": [
+		{
+			"type":"form",
+			"fields": {
+				"parentAccount":{"text":"Üst hesap", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/accounts",
+						"label":"{accountCode} - {name}"
+					},
+					"col":6
+				},
+				"code":{"text":"Kod", "type":"string","col":6 , "required":true},
+				"name":{"text":"Hesap ismi", "type":"string", "required":true}
+			},
+			"options": {
+				"mode": "general",
+				"isForm":true
+			},
+			"dataSource": {
+				"method":"GET",
+				"url":"/dbapi/accounts"
+			}
+		}
+	]
+}

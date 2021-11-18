@@ -33,6 +33,7 @@
 		"got": "^12.0.0-beta.4",
 		"hashids": "^2.2.8",
 		"html-to-text": "^8.0.0",
+		"html2json": "^1.0.2",
 		"jimp": "^0.16.2-canary.1045.1221.0",
 		"jsonwebtoken": "^8.5.1",
 		"method-override": "^3.0.0",

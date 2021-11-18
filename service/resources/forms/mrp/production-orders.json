@@ -1,0 +1,172 @@
+{
+	"index":
+	[
+		{
+			"type":"filter",
+			"fields": {
+				"tarih": {"text":"Tarih", "type":"dateRange"},
+				"productionTypeCode":{"text":"Türü", "type":"lookup", "staticValues":"productionTypeCodeList", "col":3}
+			}
+		},
+		{
+			"type": "grid",
+			"fields": {
+				"productionId" 		:{"text":"Üretim No", "type":"string", "html":"<div class=\"badge-status status-temel\">{productionId}</div><div class=\"badge-status status-ticari mt-1\">{issueDate}</div>"},
+				"issueDate"  			:{"text":"E.Tarihi", "type":"string", "html":"<span class=\"badge-status status-ticari\">{issueDate}</span>"},
+				"itemName" 				:{"text":"Mamül", "type":"string"},
+				"plannedPeriod" 	:{"text":"Planlama", "type":"string","html":"<div class=\"badge-status status-temel\">{plannedPeriod.startDate}</div><div class=\"badge-status status-istisna mt-1\">{plannedPeriod.endDate}</div>"},
+				"quantity" 				:{"text":"Miktar",  "type":"number"},
+				"musteri"  				:{"text":"Müşteri", "type":"string"},
+				"ambalaj"  				:{"text":"Paketleme", "type":"string"},
+				"status" 					:{"text":"Durumu", "type":"lookup", "staticValues":"productionStatusTypes", "html":"<span class=\"badge-status status-istisna\">{status}</span>"},
+				"islemButonlari" 	:{"text":"İşlem", "type":"string", "width":"110px"}
+				
+			},
+			"options": {
+				"selection": true,
+				"filter": true,
+				"buttons": {
+					"add": true,
+					"edit": true,
+					"delete": true,
+					"view": false,
+					"print": false,
+					"copy": true
+				}
+			},
+			"dataSource": {
+				"type":"remote",
+				"method":"GET",
+				"url":"/dbapi/production-orders"
+			}
+		}
+	],
+	"form": [
+		{
+			"type":"form",
+			"fields":{
+				"tabs":[
+					{
+						"text":"Bilgiler",
+						"controls":{
+							"name.value":{"text":"Adı", "type":"string", "col":4   , "required":true},
+							"description.value":{"text":"Açıklama", "type":"string", "col":8 },
+							"tags":{"text":"Etiketler (virgulle ayrılmış)", "type":"string"},
+
+							"grup1":{
+								"text":"Diger",
+								"collapsed":true,
+								"controls":{
+									"brandName.value":{"text":"Marka", "type":"string", "col":4 },
+									"modelName.value":{"text":"Model", "type":"string", "col":4 },
+									"commodityClassification.0.itemClassificationCode.value":{"text":"Sınıf kodu (GTIPNO)", "type":"string", "col":4 },
+									"buyersItemIdentification.ID.value":{"text":"Alıcı kodu", "type":"string", "col":4 },
+									"sellersItemIdentification.ID.value":{"text":"Satıcı kodu", "type":"string" , "col":4},
+									"manufacturersItemIdentification.ID.value":{"text":"Üretici kodu", "type":"string" , "col":4},
+									"originCountry.name.value":{"text":"Menşei", "type":"string", "col":4 },
+									"keyword.value":{"text":"Anahtar kelime", "type":"string", "col":4 },
+									"accountGroup":{
+										"text":"Muhasebe Grubu", "type":"remoteLookup", 
+										"dataSource":{
+											"url":"/dbapi/account-groups",
+											"label":"{name}"
+										}, 
+										"col":4
+									}
+								}
+							},
+							"tracking1" :{
+								"text":"Stok Takibi",  "type":"string",   
+								"controls":{
+									"tracking.lotNo":{"text":"Lot No?", "type":"boolean", "col":"col-4 col-md-2"  },
+									"tracking.serialNo":{"text":"Seri No?", "type":"boolean","col":"col-4 col-md-2"    },
+									"tracking.color":{"text":"Renk?", "type":"boolean","col":"col-4 col-md-2"     },
+									"tracking.pattern":{"text":"Desen?", "type":"boolean" ,"col":"col-4 col-md-2"    },
+									"tracking.size":{"text":"Beden?", "type":"boolean","col":"col-4 col-md-2"    }
+								},
+								"collapsed":true
+							},
+							"passive":{"text":"Pasif?", "type":"boolean"    }
+						}
+					},
+					{
+						"text":"Birimler/Barkodlar",
+						"controls":{
+							"unitPacks":{"text":"Birimler", 
+								"type":"grid",
+								"fields": {
+									"unitCode":{"text":"Birim", "type":"lookup", "staticValues":"unitCodeList", "required":true},
+									"netWeight.value":{"text":"Net ağırlık", "type":"number", "value":0},
+									"dimension.width.value":{"text":"En", "type":"number", "value":0},
+									"dimension.length.value":{"text":"Boy", "type":"number", "value":0},
+									"dimension.height.value":{"text":"Yükseklik", "type":"number", "value":0},
+									"volume":{"text":"Yükseklik", "type":"number", "value":0, "readonly":true, "calc":"{dimension.width.value}*{netWeight.value}/7"},
+									"barcode":{"text":"Barkod", "type":"string"}
+								},
+								"options": {
+									"selection": false,
+									"filter": false,
+									"confirmBeforeRemove":false,
+									"buttons": {
+										"add": true,
+										"edit": true,
+										"delete": true,
+										"view": false,
+										"print": false,
+										"copy": false
+									},
+									"dataSource": {
+										"type":"local",
+										"method11111":"GET",
+										"url1111":"/dbapi/1111111"
+									}
+								},
+								"data":{
+									"list":[
+										{
+											"_id":"888859595",
+											"unitCode":"NIU", 
+											"netWeight":{"value":78}, 
+											"dimension":{
+												"width":{"value":40},
+												"length":{"value":25}, 
+												"height":{"value":180} 
+											}
+										}
+									]
+								}
+
+							},
+							"barkodlar":{"text":"Barkodlar (Carpanlari ';' ile barkod sonuna ekleyiniz)", "type":"strings" , "rows":5}
+						}
+					},
+					{
+						"text":"Resimler/dosyalar",
+						"controls":{
+							"images.0"  :{"text":"Resim 1",     "type":"fileBase64Image"   },
+							"images.1"  :{"text":"Resim 2",     "type":"fileBase64Image"   },
+							"images.2"  :{"text":"Resim 3",     "type":"fileBase64Image"   },
+							"files.0"  :{"text":"Dosya/dokuman 1",     "type":"fileBase64"   },
+							"files.1"  :{"text":"Dosya/dokuman 2",     "type":"fileBase64"   },
+							"files.2"  :{"text":"Dosya/dokuman 3",     "type":"fileBase64"   }
+						}
+					},
+					{
+						"text":"Palet/Paketleme Tanımları",
+						"controls":{
+							"ambalajTanimlari":{"text":"Paketleme", "type":"partial"}
+						}
+					}
+				]
+},
+"options": {
+	"mode": "general",
+	"isForm":true
+},
+"dataSource": {
+	"method":"GET",
+	"url":"/dbapi/production-orders"
+}
+}
+]
+}

@@ -1,7 +1,7 @@
 module.exports=function(conn){
 	let collectionName=path.basename(__filename,'.collection.js')
 	let schema = mongoose.Schema({
-		memberId: {type: mongoose.Schema.Types.ObjectId, ref:'members', default:null, index:true},
+		memberId: {type: mongoose.Schema.Types.ObjectId, ref:'portal_members', default:null, index:true},
 		dbId: {type: mongoose.Schema.Types.ObjectId, ref:'dbdefines', default:null, index:true},
 		status:{type:String,default:'', index:true},
 		icon:{type:String,default:''},

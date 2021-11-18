@@ -52,9 +52,7 @@ module.exports=function(dbModel){
 	})
 
 	schema.pre('save', (next)=>{
-		if(this.despatchLine){
-			this.lineCountNumeric.value=this.despatchLine.length
-		}
+		
 		next()
 		// updateActions(dbModel,this,next)
 	})

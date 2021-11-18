@@ -78,8 +78,8 @@ module.exports=function(dbModel){
 		pricingExchangeRate:dbType.exchangeRateType,
 		paymentExchangeRate:dbType.exchangeRateType,
 		paymentAlternativeExchangeRate:dbType.exchangeRateType,
-		taxTotal:[dbType.taxTotalType],
-		withholdingTaxTotal:[dbType.taxTotalType],
+		taxTotal:dbType.taxTotalType,
+		withholdingTaxTotal:dbType.taxTotalType,
 		allowanceCharge:[dbType.allowanceChargeType],
 		legalMonetaryTotal: { 
 			lineExtensionAmount  :dbType.amountType,
@@ -115,7 +115,9 @@ schema.pre('save', (next)=>{
 
 schema.pre('remove', (next)=>next())
 schema.pre('remove', true, (next, done)=>next())
-schema.on('init', (model)=>{})
+schema.on('init', (model)=>{
+	console.log(`schema init:`,collectionName)
+})
 schema.plugin(mongoosePaginate)
 schema.plugin(mongooseAggregatePaginate)
 

@@ -1,0 +1,216 @@
+{
+	"index": [{
+			"type": "filter",
+			"fields": {
+				"tarih": {
+					"text": "Tarih",
+					"type": "dateRange"
+				},
+				"profileId.value": {
+					"text": "Senaryo",
+					"type": "lookup",
+					"staticValues": "orderProfileIdList",
+					"col": 2
+				},
+				"orderTypeCode.value": {
+					"text": "Tipi",
+					"type": "lookup",
+					"staticValues": "orderTypeCodeList",
+					"col": 2
+				}
+			}
+		},
+		{
+			"type": "grid",
+			"fields": {
+				"ID": {
+					"text": "ID",
+					"type": "string",
+					"visible": false
+				},
+				"orderNo": {
+					"text": "Sip. No",
+					"type": "string",
+					"html": "<b>{ID}</b><br>{localDocumentId}",
+					"width": "140px"
+				},
+				"tarih": {
+					"text": "Tarih",
+					"type": "string",
+					"html": "{issueDate}<br><small class=\"text-primary\">{issueTime}</small>",
+					"width": "130px"
+				},
+				"musteri": {
+					"text": "Müşteri",
+					"type": "string",
+					"filterField": "partyName",
+					"html": "<b>{party.title}</b><br><small class=\"text-primary\">{party.vknTckn}</small> | Satır:{lineCountNumeric}"
+				},
+				"orderStatus": {
+					"text": "Durum",
+					"type": "lookup",
+					"staticValues": "orderStatusTypes"
+				}
+			},
+			"options": {
+				"selection": true,
+				"filter": true,
+				"buttons": {
+					"add": true,
+					"edit": true,
+					"delete": true,
+					"view": false,
+					"print": true,
+					"copy": true
+				}
+			},
+			"dataSource": {
+				"type": "remote",
+				"method": "GET",
+				"url": "/dbapi/order/outbox",
+				"deleteUrl": "/dbapi/order",
+				"copyUrl": "/dbapi/order/copy",
+				"printUrl": "/dbapi/order/print"
+			}
+		}
+	],
+	"form": [{
+		"type": "form",
+		"fields": {
+			"ioType": {
+				"type": "hidden",
+				"value": 0
+			},
+			"baslik": {
+				"text": "Belge Bilgileri",
+				"fields": {
+					"eIntegrator": {
+						"text": "Entegratör",
+						"type": "remoteLookup",
+						"dataSource": {
+							"type": "remote",
+							"method": "GET",
+							"url": "/dbapi/integrators",
+							"label": "{name}"
+						},
+						"col": "col-sm-6 col-md-3",
+						"lastRecord": true
+					},
+					"ID.value": {
+						"text": "Belge No(Boş ise otomatik)",
+						"type": "string",
+						"col": "col-sm-6 col-md-3"
+					},
+					"uuid.value": {
+						"text": "ETTN(uuid)",
+						"type": "string",
+						"readonly": true,
+						"col": "col-sm-6 col-md-3"
+					},
+					"divsor1": {
+						"type": "w-100"
+					},
+					"issueDate.value": {
+						"text": "Tarih",
+						"type": "date",
+						"col": 3
+					},
+					"issueTime.value": {
+						"text": "Saat",
+						"type": "time",
+						"col": 3
+					},
+					"profileId.value": {
+						"text": "Senaryo",
+						"type": "lookup",
+						"staticValues": "orderProfileIdList",
+						"lastRecord": true,
+						"col": 3
+					},
+					"orderTypeCode.value": {
+						"text": "Tipi",
+						"type": "lookup",
+						"staticValues": "orderTypeCodeList",
+						"lastRecord": true,
+						"col": 3
+					}
+				}
+			},
+			"cari": { "text": "Müşteri Bilgileri", "type": "widget", "widget": "customerParty", "grouped": true, "collapsed": false, "prefix": "buyerCustomerParty.party.", "col": 12 },
+			"orderLine": { "text": "Satırlar", "type": "widget", "widget": "orderLine", "grouped": true, "collapsed": false, "prefix": "", "col": 12 },
+			"group1": { "text": "Toplamlar", "type": "widget", "widget": "monetaryTotal", "grouped": true, "collapsed": false, "prefix": "anticipatedMonetaryTotal.", "col": 12 },
+			"note": { "text": "Notlar/Bilgiler", "type": "widget", "widget": "note", "grouped": true, "collapsed": false, "prefix": "", "col": 12 }
+		},
+		"options": {
+			"mode": "general",
+			"isForm": true
+		},
+		"dataSource": {
+			"method": "GET",
+			"url": "/dbapi/order"
+		}
+		
+	}],
+	"print": [{
+		"type": "html",
+		"text": "print data",
+		"dataSource": {
+			"method": "GET",
+			"url": "/dbapi/order/print"
+		}
+	}],
+	"status": [{
+		"type": "form",
+		"fields": {
+			"orderStatus": {
+				"text": "Belge Durumu",
+				"type": "string",
+				"readonly": true
+			},
+			"orderErrors": {
+				"type": "grid",
+				"text": "Hatalar",
+				"collapsed": false,
+				"fields": {
+					"_date": {
+						"text": "Tarih Saat",
+						"type": "datetime"
+					},
+					"code": {
+						"text": "Kod",
+						"type": "string"
+					},
+					"message": {
+						"text": "Açıklama",
+						"type": "string"
+					}
+				}
+			},
+			"islem": {
+				"text": "İşlem",
+				"type": "group",
+				"collapsed": false,
+				"fields": {
+					"localStatus": {
+						"text": "İşlem Durum",
+						"type": "string",
+						"readonly": true
+					},
+					"localErrors": {
+						"type": "grid",
+						"text": "İşlem Hataları",
+						"fields": {
+							"_date": { "text": "Tarih Saat", "type": "datetime" },
+							"code": { "text": "Kod", "type": "string" },
+							"message": { "text": "Açıklama", "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"dataSource": {
+			"method": "GET",
+			"url": "/dbapi/order"
+		}
+	}]
+}

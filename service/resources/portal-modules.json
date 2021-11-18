@@ -1,96 +1,96 @@
 {
     "dashboard" : true,
     "invoice" : {
-        "outbox" : true,
-        "inbox" : true,
-        "gibUsers" : true,
-        "customers" : true,
-        "vendors" : true
+        "outbox" : false,
+        "inbox" : false,
+        "gibUsers" : false,
+        "customers" : false,
+        "vendors" : false
     },
     "despatch" : {
-        "outbox" : true,
-        "inbox" : true,
-        "gibUsers" : true,
-        "customers" : true,
-        "vendors" : true
+        "outbox" : false,
+        "inbox" : false,
+        "gibUsers" : false,
+        "customers" : false,
+        "vendors" : false
     },
     "orders" : {
-        "outbox" : true,
-        "inbox" : true,
-        "waitingSaleOrders" : true,
-        "customers" : true,
-        "vendors" : true
+        "outbox" : false,
+        "inbox" : false,
+        "waitingSaleOrders" : false,
+        "customers" : false,
+        "vendors" : false
     },
     "mrp" : {
-        "productionOrders" : true,
-        "productionOrdersPlan" : true,
-        "waitingSaleOrders" : true,
-        "products" : true,
-        "semiProducts" : true,
-        "materialPlanning" : true,
+        "productionOrders" : false,
+        "productionOrdersPlan" : false,
+        "waitingSaleOrders" : false,
+        "products" : false,
+        "semiProducts" : false,
+        "materialPlanning" : false,
         "raports" : {
-            "productionAnalize" : true,
-            "costAnalize" : true
+            "productionAnalize" : false,
+            "costAnalize" : false
         },
         "defines" : {
-            "rawMaterials" : true,
-            "helperMaterials" : true,
-            "stations" : true,
-            "machineGroups" : true,
-            "machines" : true,
-            "moldGroups" : true,
-            "molds" : true,
-            "processSteps" : true,
-            "breakReasons" : true
+            "rawMaterials" : false,
+            "helperMaterials" : false,
+            "stations" : false,
+            "machineGroups" : false,
+            "machines" : false,
+            "moldGroups" : false,
+            "molds" : false,
+            "processSteps" : false,
+            "breakReasons" : false
         }
     },
     "inventory" : {
-        "items" : true,
-        "inventory" : true,
-        "inventoryFiches" : true,
+        "items" : false,
+        "inventory" : false,
+        "inventoryFiches" : false,
         "defines" : {
-            "palletTypes" : true,
-            "pallets" : true,
-            "packingTypes" : true
+            "palletTypes" : false,
+            "pallets" : false,
+            "packingTypes" : false
         }
     },
     "finance" : {
-        "customers" : true,
-        "vendors" : true,
-        "flow" : true,
-        "balances" : true,
-        "casing" : true,
-        "bank" : true
+        "customers" : false,
+        "vendors" : false,
+        "flow" : false,
+        "balances" : false,
+        "casing" : false,
+        "bank" : false
     },
     "accounting" : {
-        "accounts" : true,
-        "accountGroups" : true,
-        "entry" : true,
-        "flow" : true,
-        "ledger" : true
+        "accounts" : false,
+        "accountGroups" : false,
+        "entry" : false,
+        "flow" : false,
+        "ledger" : false
     },
     "posDevice" : {
-        "transfer" : true,
+        "transfer" : false,
         "reports" : {
-            "rapor1" : true,
-            "rapor2" : true
+            "rapor1" : false,
+            "rapor2" : false
         },
         "defines" : {
-            "devices" : true,
-            "services" : true
+            "devices" : false,
+            "services" : false
         }
     },
     "settings" : {
         "locations" : true,
-        "subLocations" : true,
-        "shifts" : true,
-        "persons" : true,
-        "printDesigns" : true,
+        "subLocations" : false,
+        "shifts" : false,
+        "persons" : false,
+        "printDesigns" : false,
         "integrators" : true,
         "programs" : true,
         "workingParams" : {
-            "general" : true,
-            "private" : true
+            "general" : false,
+            "private" : false
         }
     },
     "system" : {

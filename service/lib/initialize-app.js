@@ -1,25 +1,25 @@
-module.exports=(cb)=>{
+module.exports = (cb) => {
 
-	global.fs=require('fs')
-	global.path=require('path')
-	
-	global.os=require('os')
-	global.moment=require('./moment')
+	global.fs = require('fs')
+	global.path = require('path')
+
+	global.os = require('os')
+	global.moment = require('./moment')
 	global.moment.updateLocale('tr')
 	require('colors')
 
 
-	Number.prototype.toDigit = function(digit){
+	Number.prototype.toDigit = function(digit) {
 		var t = this
-		var s=t.toString()
-		if(s.length<digit){
-			s='0'.repeat(digit-s.length) + s
+		var s = t.toString()
+		if(s.length < digit) {
+			s = '0'.repeat(digit - s.length) + s
 		}
 		return s
 	}
 
-	function simdi(){
-		var s= yyyymmddhhmmss(new Date())
+	function simdi() {
+		var s = yyyymmddhhmmss(new Date())
 		return s
 
 		function yyyymmddhhmmss(tarih) {
@@ -34,75 +34,77 @@ module.exports=(cb)=>{
 		}
 	}
 
-	global.eventLog=function(obj,...placeholders){
-		console.log(simdi() ,obj,...placeholders)
+	global.eventLog = function(obj, ...placeholders) {
+		console.log(simdi(), obj, ...placeholders)
 	}
 
-	global.errorLog=function(obj,...placeholders){
-		console.error(simdi().red ,obj,...placeholders)
+	global.errorLog = function(obj, ...placeholders) {
+		console.error(simdi().red, obj, ...placeholders)
 	}
 
 
-	global.config={}
-	
-	if(fs.existsSync(path.join(__root,'config.json'))){
-		config=require(path.join(__root,'config.json'))
-	}else{
-		throw {code:'CONFIG_ERROR',message:`config.json dosyasi bulunamadi`}
+	global.config = {}
+
+	if(fs.existsSync(path.join(__root, 'config.json'))) {
+		config = require(path.join(__root, 'config.json'))
+	} else {
+		throw { code: 'CONFIG_ERROR', message: `config.json dosyasi bulunamadi` }
 		process.exit()
 	}
 
 
-	let commonConfig={}
+	let commonConfig = {}
 
-	if((config.config_file || '')!=''){
-		if(fs.existsSync(config.config_file)){
-			commonConfig=require(config.config_file)
-		}else{
-			throw {code:'COMMON_CONFIG_ERROR',message:`${config.config_file} dosyasi bulunamadi`}
+	if((config.config_file || '') != '') {
+		if(fs.existsSync(config.config_file)) {
+			commonConfig = require(config.config_file)
+		} else {
+			throw { code: 'COMMON_CONFIG_ERROR', message: `${config.config_file} dosyasi bulunamadi` }
 			process.exit()
 		}
 	}
 
-	
 
-	Object.keys(commonConfig || {}).forEach((key)=>{
-		if(key!='apps')
-			config[key]=commonConfig[key]
+
+	Object.keys(commonConfig || {}).forEach((key) => {
+		if(key != 'apps')
+			config[key] = commonConfig[key]
 	})
 
-	
-	let appName=config.name
 
-	if(commonConfig.apps!=undefined){
-		Object.keys(commonConfig.apps[appName] || {}).forEach((key)=>{
-			global.config[key]=commonConfig.apps[appName][key]
+	let appName = config.name
+
+	if(commonConfig.apps != undefined) {
+		Object.keys(commonConfig.apps[appName] || {}).forEach((key) => {
+			global.config[key] = commonConfig.apps[appName][key]
 		})
 	}
 
 
-	if(process.argv[2]=='localhost' || process.argv[2]=='-l' || process.argv[2]=='-dev' || process.argv[2]=='-development'){
-		global.config.status='development'
-	}else{
-		global.config.status=global.config.status || 'release'
+	if(process.argv[2] == 'localhost' || process.argv[2] == '-l' || process.argv[2] == '-dev' || process.argv[2] == '-development') {
+		global.config.status = 'development'
+	} else {
+		global.config.status = global.config.status || 'release'
 	}
 
 	global.util = require('./util')
 	global.mail = require('./mail')
 
-	
-	global.taskHelper={}
-	if(fs.existsSync('./taskhelper'))
-		global.taskHelper=require('./taskhelper')
 
-	global.restServices={}
-	if(fs.existsSync('./rest-helper'))
-		Object.keys(config.restServices || {}).forEach((key)=>{
-			if(config.restServices[key].enabled===true){
-				let uri=config.restServices[key].url || config.restServices[key].uri || ''
-				global.restServices[key]=require('./rest-helper')(uri)
+	global.taskHelper = {}
+	if(fs.existsSync(path.join(__root,'lib/taskhelper.js')))
+		global.taskHelper = require(path.join(__root,'lib/taskhelper.js'))
+
+	global.restServices = {}
+	if(fs.existsSync(path.join(__root,'lib/rest-helper.js'))) {
+		Object.keys(config.restServices || {}).forEach((key) => {
+			if(config.restServices[key].enabled === true) {
+				let uri = config.restServices[key].url || config.restServices[key].uri || ''
+				global.restServices[key] = require('./rest-helper')(uri)
 			}
 		})
+	}
+
 
 	console.log('-'.repeat(70))
 	console.log(`${'Application Name:'.padding(25)} ${(config.name || '').brightYellow}`)
@@ -112,8 +114,8 @@ module.exports=(cb)=>{
 	if(config.base_uri)
 		console.log(`${'Base URI:'.padding(25)} ${config.base_uri.cyan}`)
 
-	
-	Object.keys(config.mongodb || {}).forEach((key)=>{
+
+	Object.keys(config.mongodb || {}).forEach((key) => {
 		console.log(`${key.padding(25)} ${config.mongodb[key].brightYellow}`)
 	})
 

@@ -1,0 +1,65 @@
+{
+	"index":[
+		{
+			"type": "grid",
+			"fields": {
+				"location":{"text":"Lokasyon", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/locations",
+						"label":"{name}"
+					}
+				},
+				"name":{"text":"Adı", "type":"string"},
+				"description":{"text":"Açıklama", "type":"string"},
+				"passive":{"text":"Pasif?", "type":"boolean"}
+			},
+			"options": {
+				"selection": true,
+				"filter": true,
+				"buttons": {
+					"add": true,
+					"edit": true,
+					"delete": true,
+					"view": false,
+					"print": true,
+					"copy": false
+				}
+			},
+			"dataSource": {
+				"type":"remote",
+				"method":"GET",
+				"url":"/dbapi/mrp-stations"
+			}
+		}
+	],
+	"form": [
+		{
+			"type":"form",
+			"fields": {
+				"location":{"text":"Lokasyon", "type":"remoteLookup", 
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"search":"/dbapi/locations?name={search}",
+						"id":"/dbapi/locations/{_id}",
+						"label":"{name}"
+					},
+					"col":4
+				},
+				"name":{"text":"Adı", "type":"string", "col":12},
+				"description":{"text":"Açıklama", "type":"string","col":12},
+				"passive":{"text":"Pasif?", "type":"boolean","col":4}
+			},
+			"options": {
+				"mode": "general",
+				"isForm":true
+			},
+			"dataSource": {
+				"method":"GET",
+				"url":"/dbapi/mrp-stations"
+			}
+		}
+	]
+}
