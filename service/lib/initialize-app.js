@@ -3,6 +3,7 @@ module.exports = (cb) => {
 	global.fs = require('fs')
 	global.path = require('path')
 
+	global.sizeOf = require('object-sizeof')
 	global.os = require('os')
 	global.moment = require('./moment')
 	global.moment.updateLocale('tr')
@@ -92,11 +93,11 @@ module.exports = (cb) => {
 
 
 	global.taskHelper = {}
-	if(fs.existsSync(path.join(__root,'lib/taskhelper.js')))
-		global.taskHelper = require(path.join(__root,'lib/taskhelper.js'))
+	if(fs.existsSync(path.join(__root, 'lib/taskhelper.js')))
+		global.taskHelper = require(path.join(__root, 'lib/taskhelper.js'))
 
 	global.restServices = {}
-	if(fs.existsSync(path.join(__root,'lib/rest-helper.js'))) {
+	if(fs.existsSync(path.join(__root, 'lib/rest-helper.js'))) {
 		Object.keys(config.restServices || {}).forEach((key) => {
 			if(config.restServices[key].enabled === true) {
 				let uri = config.restServices[key].url || config.restServices[key].uri || ''

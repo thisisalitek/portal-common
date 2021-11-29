@@ -49,6 +49,7 @@
 		"passport": "~0.4.1",
 		"passport-local": "~1.0.0",
 		"serve-favicon": "^2.5.0",
+		"sizeof": "^1.0.0",
 		"socket.io": "^4.2.0",
 		"urllib": "^2.37.3",
 		"uuid": "^8.3.2",
