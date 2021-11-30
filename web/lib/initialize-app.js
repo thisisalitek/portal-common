@@ -3,6 +3,7 @@ module.exports=(cb)=>{
 	global.path=require('path')
 	global.appName=require(path.join(__root,'package.json')).name
 	global.os=require('os')
+	global.os=require('os')
 
 	global.moment=require('./moment')
 	global.moment.updateLocale('tr')

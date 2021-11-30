@@ -31,26 +31,26 @@
 				"despatchNo": {
 					"text": "Irs. No",
 					"type": "string",
-					"html": "<b>{ID}</b><br>{localDocumentId}",
+					"html": "<b>${ID}</b><br>${localDocumentId}",
 					"width": "140px"
 				},
 				"tarih": {
 					"text": "Tarih",
 					"type": "string",
-					"html": "{issueDate}<br><small class=\"text-primary\">{issueTime}</small>",
+					"html": "${issueDate}<br><small class=\"text-primary\">${issueTime}</small>",
 					"filter": false
 				},
 				"musteri": {
 					"text": "Müşteri",
 					"type": "string",
 					"filterField": "partyName",
-					"html": "<b>{party.title}</b><br><small class=\"text-primary\">{party.vknTckn}</small> | Satır:{lineCountNumeric}"
+					"html": "<b>${party.title}</b><br><small class=\"text-primary\">${party.vknTckn}</small> | Satır:${lineCountNumeric}"
 				},
 				"despatchStatus": {
 					"text": "GİB Status",
 					"type": "lookup",
 					"staticValues": "despatchStatusTypes",
-					"html": "<span class=\"badge badge-status status-{despatchStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/{_id}?view=plain','Log Kayıtları','900','600')\">{valueText}</a></span>"
+					"html": "<span class=\"badge badge-status status-${despatchStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
 				},
 				"receiptAdvice.receiptStatus": {
 					"text": "Teslim",
@@ -61,7 +61,7 @@
 					"text": "İşlem",
 					"type": "lookup",
 					"staticValues": "localStatusTypes",
-					"html": "<span class=\"badge badge-status status-{localStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/{_id}?view=plain','Log Kayıtları','900','600')\">{valueText}</a></span>"
+					"html": "<span class=\"badge badge-status status-${localStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
 				}
 			},
 			"options": {
@@ -115,7 +115,7 @@
 							"type": "remote",
 							"method": "GET",
 							"url": "/dbapi/integrators",
-							"label": "{name}"
+							"label": "${name}"
 						},
 						"col": "col-sm-6 col-md-3",
 						"required": true,
@@ -139,7 +139,7 @@
 							"type": "remote",
 							"method": "GET",
 							"url": "/dbapi/locations",
-							"label": "{name}"
+							"label": "${name}"
 						},
 						"col": "col-sm-6 col-md-3",
 						"lastRecord": true
@@ -217,7 +217,7 @@
 							"type": "remote",
 							"method": "GET",
 							"url": "/dbapi/customers",
-							"label": "{partyName.name.value}"
+							"label": "${partyName.name.value}"
 						},
 						"lookupTextField": "deliveryCustomerParty.party.partyName.name.value",
 						"onchange": "cariKart_changed('deliveryCustomerParty')"
@@ -321,10 +321,10 @@
 							"type": "remote",
 							"method": "GET",
 							"url": "/dbapi/items?itemType=all",
-							"label": "{name.value} {description.value}"
+							"label": "${name.value} ${description.value}"
 						},
 						"lookupTextField": "item.name.value",
-						"displayFormat": "{item.name.value} - {item.description.value}",
+						"displayFormat": "${item.name.value} - ${item.description.value}",
 						"required": true
 					},
 					"deliveredQuantity.value": {
@@ -370,7 +370,7 @@
 										"type": "remote",
 										"method": "GET",
 										"url": "/dbapi/items?itemType=all",
-										"label": "{name.value} {description.value}"
+										"label": "${name.value} ${description.value}"
 									},
 									"lookupTextField": "item.name.value",
 									"required": true,

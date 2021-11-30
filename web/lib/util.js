@@ -1,4 +1,6 @@
-﻿Date.prototype.yyyymmdd = function() {
+﻿global.uuid = require('uuid')
+
+Date.prototype.yyyymmdd = function() {
 	var yyyy = this.getFullYear().toString()
 	var mm = (this.getMonth() + 1).toString();
 	var dd = this.getDate().toString()

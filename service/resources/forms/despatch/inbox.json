@@ -11,12 +11,12 @@
 			"type": "grid",
 			"fields": {
 				"ID": { "text": "ID", "type": "string", "visible": false },
-				"despatchNo": { "text": "Irs. No", "type": "string", "html": "<b>{ID}</b><br>{localDocumentId}", "width": "140px" },
-				"tarih": { "text": "Tarih", "type": "string", "html": "{issueDate}<br><small class=\"text-primary\">{issueTime}</small>", "width": "130px" },
-				"musteri": { "text": "Müşteri", "type": "string", "filterField": "partyName", "html": "<b>{party.title}</b><br><small class=\"text-primary\">{party.vknTckn}</small> | Satır:{lineCountNumeric}" },
-				"despatchStatus": { "text": "GİB Status", "type": "lookup", "staticValues": "despatchStatusTypes", "html": "<a class=\"badge-status status-{despatchStatus.toLowerCase()} \" href=\"javascript:popupCenter('#/despatch/outbox/status/{_id}?view=plain','İşlem Durumları','900','600')\">{valueText}</a>" },
+				"despatchNo": { "text": "Irs. No", "type": "string", "html": "<b>${ID}</b><br>${localDocumentId}", "width": "140px" },
+				"tarih": { "text": "Tarih", "type": "string", "html": "${issueDate}<br><small class=\"text-primary\">${issueTime}</small>", "width": "130px" },
+				"musteri": { "text": "Müşteri", "type": "string", "filterField": "partyName", "html": "<b>${party.title}</b><br><small class=\"text-primary\">${party.vknTckn}</small> | Satır:{lineCountNumeric}" },
+				"despatchStatus": { "text": "GİB Status", "type": "lookup", "staticValues": "despatchStatusTypes", "html": "<a class=\"badge-status status-${despatchStatus.toLowerCase()} \" href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','İşlem Durumları','900','600')\">${valueText}</a>" },
 				"receiptAdvice.receiptStatus": { "text": "Teslim", "type": "lookup", "staticValues": "receiptStatusTypes" },
-				"localStatus": { "text": "İşlem", "type": "lookup", "staticValues": "localStatusTypes", "html": "<a class=\"badge-status status-{localStatus} \" href=\"javascript:popupCenter('#/despatch/outbox/status/{_id}?view=plain','İşlem Durumları','900','600')\">{valueText}</a>" }
+				"localStatus": { "text": "İşlem", "type": "lookup", "staticValues": "localStatusTypes", "html": "<a class=\"badge-status status-${localStatus} \" href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','İşlem Durumları','900','600')\">${valueText}</a>" }
 			},
 			"options": {
 				"selection": true,
@@ -66,7 +66,7 @@
 							"type": "remote",
 							"method": "GET",
 							"url": "/dbapi/integrators",
-							"label": "{name}"
+							"label": "${name}"
 						},
 						"col": "col-sm-6 col-md-3",
 						"required": true,
@@ -90,7 +90,7 @@
 							"type": "remote",
 							"method": "GET",
 							"url": "/dbapi/locations",
-							"label": "{name}"
+							"label": "${name}"
 						},
 						"col": "col-sm-6 col-md-3",
 						"lastRecord": true
@@ -152,7 +152,7 @@
 							"type": "remote",
 							"method": "GET",
 							"url": "/dbapi/customers",
-							"label": "{partyName.name.value}"
+							"label": "${partyName.name.value}"
 						},
 						"lookupTextField": "despatchSupplierParty.party.partyName.name.value",
 						"onchange": "cariKart_changed('despatchSupplierParty')"
@@ -211,7 +211,7 @@
 							"type": "remote",
 							"method": "GET",
 							"url": "/dbapi/items?itemType=all",
-							"label": "{name.value} {description.value}"
+							"label": "${name.value} ${description.value}"
 						},
 						"lookupTextField": "item.name.value",
 						"required": true
@@ -232,7 +232,7 @@
 										"type": "remote",
 										"method": "GET",
 										"url": "/dbapi/items?itemType=all",
-										"label": "{name.value} {description.value}"
+										"label": "${name.value} ${description.value}"
 									},
 									"lookupTextField": "item.name.value",
 									"required": true,

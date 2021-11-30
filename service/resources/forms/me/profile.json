@@ -22,9 +22,9 @@
 			"fields":{
 				"button1":{
 					"text":"",
-					"text":"`Parolamı değiştir`",
+					"text":"Parolamı değiştir",
 					"type":"button",
-					"href":"`${global.login.url}/changepassword?token=${global.token}&ret=${encodeURIComponent(location.href)}`",
+					"href":"${global.login.url}/changepassword?token=${global.token}&ret=${encodeURIComponent(location.href)}",
 					"class":"btn btn-danger",
 					"icon":"fas fa-key",
 					"col":"col-md-6"

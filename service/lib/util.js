@@ -1,5 +1,6 @@
 ﻿var htmlToText = require('html-to-text')
 var bcrypt = require('bcrypt-nodejs')
+global.js2xmlparser = require('js2xmlparser')
 global.ejs = require('ejs')
 global.uuid = require('uuid')
 
