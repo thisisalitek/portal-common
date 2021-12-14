@@ -1,0 +1,56 @@
+{
+	"index":
+	[
+		{
+			"type":"filter",
+			"fields" :{
+				"tarih" :{"text":"Tarih", "type":"dateRange"}
+			}
+		},
+		{
+			"type": "grid",
+			"fields": {
+				"location" : {"text":"Lokasyon", "type":"remoteLookup",
+					"dataSource":{
+						"type":"remote",
+						"method":"GET",
+						"url":"/dbapi/locations"
+					},
+					"width":"140px"
+				},
+				"count" 				: {"text":"ZRap Adet", "type":"number"},
+				"GunlukToplamTutar" 				: {"text":"Toplam Tutar", "type":"money"},
+				"MaliFisAdedi" 				: {"text":"Mali Fiş Adedi", "type":"number"},
+				"NakitTutari" 				: {"text":"Nakit Tutar", "type":"money"},
+				"KrediTutari" 				: {"text":"Kredi K. Tutar", "type":"money"},
+				"FoodSaleCnt" 				: {"text":"Yemek Çek Sayısı", "type":"number"},
+				"FoodRcptTotalAmount" : {"text":"Yemek Çek Tutarı", "type":"money"},
+				"InvoiceTotal" 				: {"text":"Fatura", "type":"money"},
+				"EInvoiceTotal" 				: {"text":"E-Fatura", "type":"money"},
+				"EArchiveInvoiceTotal" 	: {"text":"E-Arşiv", "type":"money"},
+				"BankaTransferTutari" 	: {"text":"Banka", "type":"money"},
+				"TaxRate0Amount" 				: {"text":"Kdv0", "type":"money"},
+				"TaxRate1Amount" 				: {"text":"Kdv1", "type":"money"},
+				"TaxRate8Amount" 				: {"text":"Kdv8", "type":"money"},
+				"TaxRate18Amount" 				: {"text":"Kdv18", "type":"money"}
+			},
+			"options": {
+				"selection": false,
+				"filter": true,
+				"buttons": {
+					"add": false,
+					"edit": false,
+					"delete": false,
+					"view": false,
+					"print": false,
+					"copy": false
+				}
+			},
+			"dataSource": {
+				"type":"remote",
+				"method":"GET",
+				"url":"/dbapi/pos-device-zreports/rapor2"
+			}
+		}
+	]
+}

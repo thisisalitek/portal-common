@@ -32,52 +32,17 @@
 		{
 			"type":"form",
 			"fields": {
-				"partyName.name.value":{"text":"Tedarikçi Adı", "type":"string", "col":6 ,"required":true},
-				"person.firstName.value":{"text":"Kişi Adı", "type":"string", "col":3},
-				"person.familyName.value":{"text":"Kişi Soyadı", "type":"string", "col":3},
-				"partyIdentification.0.ID.attr.schemeID":{"text":"Tür", "type":"lookup", "lookup":{"VKN":"VKN","TCKN":"TCKN"} , "col":4},
-
-				"partyIdentification.0.ID.value":{"text":"Vergi No/Tckn", "type":"string", "col":3},
-				"partyTaxScheme.taxScheme.name.value":{"text":"Vergi Dairesi", "type":"string", "col":4},
-				"tags":{"text":"Etiketler (virgulle ayrılmış)", "type":"string", "col":8},
-				"iletisim":{
-					"collapsed":true,
-					"text":"İletişim",
-					"fields":{
-						"contact.telephone.value"			:{"text":"Telefon", "type":"string", "col":3},
-						"contact.telefax.value"				:{"text":"Fax", "type":"string", "col":3},
-						"contact.electronicMail.value":{"text":"E-Mail", "type":"string", "col":3},
-						"websiteURI.value"											:{"text":"Web sitesi", "type":"string", 	"col":3}
-					}
-				},
-				"adres":{
-					"text":"Adres",
-					"collapsed":true,
-					"fields":{
-						"postalAddress.citySubdivisionName.value":{"text":"Mahalle/Semt", "type":"string", 	"col":6},
-						"postalAddress.streetName.value"				:{"text":"Cadde/Sokak", "type":"string", 	"col":6},
-						"postalAddress.buildingName.value"			:{"text":"Bina/Site adı", "type":"string", 	"col":3},
-						"postalAddress.buildingNumber.value"		:{"text":"Bina No", "type":"string", 	"col":2},
-						"postalAddress.blockName.value"					:{"text":"Blok adı", "type":"string", 	"col":2},
-						"postalAddress.room.value"							:{"text":"Daire", "type":"string", 	"col":2},
-						"postalAddress.district.value"					:{"text":"İlçe", "type":"string", 	"col":3},
-						"divisor1":{"type":"w-100"},
-						"postalAddress.cityName.value"					:{"text":"Şehir", "type":"string", 	"col":3},
-						"postalAddress.region.value"						:{"text":"Bölge", "type":"string", 	"col":3},
-						"postalAddress.postalZone.value"				:{"text":"Posta Kodu", "type":"string", 	"col":2},
-						"postalAddress.country.identificationCode.value":{
-							"text":"Ülke", "type":"lookup", "staticValues":"countryList","col":3,
-							"onchange":"countryCode_changed('')"
-						},
-						"postalAddress.country.name.value":{"text":"Ülke İsmi", "type":"hidden"}
-					}
-				},
+				"partyName.name.value":{"text":"Müşteri Adı", "type":"string", "col":6 ,"required":true},
+				"person.firstName.value": { "text": "Şahıs Adı", "type": "string","col": 3 },
+				"person.familyName.value": { "text": "Şahıs Soyadı", "type": "string", "col": 3 },
+				"partyIdentification.0.ID.attr.schemeID": { "text": "Tür", "type": "lookup", "lookup": { "VKN": "VKN", "TCKN": "TCKN" }, "col": 2 },
+				"partyIdentification.0.ID.value": { "text": "Vergi No/Tckn", "type": "string", "col": 3 },
+				"partyTaxScheme.taxScheme.name.value": {"text": "Vergi Dairesi",	"type": "string",	"col": 4},
+				"websiteURI.value": { "text": "Web sitesi", "type": "string", "col": 3 },
+				"adresBilgileri": { "text": "Adres bilgisi", "type": "widget", "widget": "postalAddress", "grouped":true, "collapsed": true, "prefix": "postalAddress.", "col": 12 },
+				"iletisim": { "text": "İletişim", "type": "widget", "widget": "contact", "grouped":true, "collapsed": true, "prefix": "contact.", "col": 12 },
 				"partyType":{"text":"Tür", "type":"lookup", "staticValues":"partyTypeList" , "col":4},
 				"passive":{"text":"Pasif?", "type":"boolean", "col":4    }
-			},
-			"options": {
-				"mode": "general",
-				"isForm":true
 			},
 			"dataSource": {
 				"method":"GET",

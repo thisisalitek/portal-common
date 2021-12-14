@@ -50,7 +50,8 @@
 					"text": "GİB Status",
 					"type": "lookup",
 					"staticValues": "despatchStatusTypes",
-					"html": "<span class=\"badge badge-status status-${despatchStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
+					"headerClass":"ps-3",
+					"html": "<span class=\"ms-2 badge badge-status status-${despatchStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
 				},
 				"receiptAdvice.receiptStatus": {
 					"text": "Teslim",
@@ -61,6 +62,7 @@
 					"text": "İşlem",
 					"type": "lookup",
 					"staticValues": "localStatusTypes",
+					"headerClass":"ps-3",
 					"html": "<span class=\"badge badge-status status-${localStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
 				}
 			},
@@ -101,84 +103,8 @@
 	"form": [{
 		"type": "form",
 		"fields": {
-			"ioType": {
-				"type": "hidden",
-				"value": 0
-			},
-			"baslik": {
-				"text": "Belge Bilgileri",
-				"fields": {
-					"eIntegrator": {
-						"text": "Entegratör",
-						"type": "remoteLookup",
-						"dataSource": {
-							"type": "remote",
-							"method": "GET",
-							"url": "/dbapi/integrators",
-							"label": "${name}"
-						},
-						"col": "col-sm-6 col-md-3",
-						"required": true,
-						"lastRecord": true
-					},
-					"ID.value": {
-						"text": "Belge No(Boş ise otomatik)",
-						"type": "string",
-						"col": "col-sm-6 col-md-3"
-					},
-					"uuid.value": {
-						"text": "ETTN(uuid)",
-						"type": "string",
-						"readonly": true,
-						"col": "col-sm-6 col-md-3"
-					},
-					"location": {
-						"text": "Lokasyon",
-						"type": "remoteLookup",
-						"dataSource": {
-							"type": "remote",
-							"method": "GET",
-							"url": "/dbapi/locations",
-							"label": "${name}"
-						},
-						"col": "col-sm-6 col-md-3",
-						"lastRecord": true
-					},
-					"divsor1": {
-						"type": "w-100"
-					},
-					"issueDate.value": {
-						"text": "Tarih",
-						"type": "date",
-						"col": 3
-					},
-					"issueTime.value": {
-						"text": "Saat",
-						"type": "time",
-						"col": 2
-					},
-					"profileId.value": {
-						"text": "Senaryo",
-						"type": "lookup",
-						"staticValues": "despatchProfileIdList",
-						"col": 2,
-						"lastRecord": true,
-						"onchange": "calistir(this.value)"
-					},
-					"despatchAdviceTypeCode.value": {
-						"text": "Tipi",
-						"type": "lookup",
-						"staticValues": "despatchAdviceTypeCodeList",
-						"lastRecord": true,
-						"col": 2
-					},
-					"localDocumentId": {
-						"text": "Yerel Belge No",
-						"type": "string",
-						"col": 2
-					}
-				}
-			},
+			"ioType": { "type": "hidden", "dataType": "number", "value": 0 },
+			"baslik": { "text": "Belge Bilgileri", "type": "widget", "widget": "despatchTitle", "grouped": true, "collapsed": false, "prefix": "", "col": 12 },
 			"gonderi": {
 				"text": "Gönderi Bilgileri",
 				"collapsed": true,
@@ -205,105 +131,7 @@
 					}
 				}
 			},
-			"cari": {
-				"text": "Müşteri Bilgileri",
-				"collapsed": false,
-				"fields": {
-					"deliveryCustomerParty.party._id": {
-						"text": "Şirket/Firma",
-						"type": "remoteLookup",
-						"col": 6,
-						"dataSource": {
-							"type": "remote",
-							"method": "GET",
-							"url": "/dbapi/customers",
-							"label": "${partyName.name.value}"
-						},
-						"lookupTextField": "deliveryCustomerParty.party.partyName.name.value",
-						"onchange": "cariKart_changed('deliveryCustomerParty')"
-					},
-					"deliveryCustomerParty.party.person.firstName.value": {
-						"text": "Kişi Adı",
-						"type": "string",
-						"col": 3
-					},
-					"deliveryCustomerParty.party.person.familyName.value": {
-						"text": "Kişi Soyadı",
-						"type": "string",
-						"col": 3
-					},
-					"deliveryCustomerParty.party.partyIdentification.0.ID.value": {
-						"text": "Vergi No/Tckn",
-						"type": "string",
-						"col": 4
-					},
-					"deliveryCustomerParty.party.partyIdentification.0.ID.attr.schemeID": {
-						"text": "Tür",
-						"type": "lookup",
-						"lookup": {
-							"VKN": "VKN",
-							"TCKN": "TCKN"
-						},
-						"col": 4
-					},
-					"deliveryCustomerParty.party.partyTaxScheme.taxScheme.name.value": {
-						"text": "Vergi Dairesi",
-						"type": "string",
-						"col": 4
-					},
-					"adresBilgileri": {
-						"text": "Adres bilgisi",
-						"collapsed": true,
-						"fields": {
-							"deliveryCustomerParty.party.postalAddress.citySubdivisionName.value": { "text": "Mahalle/Semt", "type": "string", "col": 6 },
-							"deliveryCustomerParty.party.postalAddress.streetName.value": { "text": "Cadde/Sokak", "type": "string", "col": 6 },
-							"deliveryCustomerParty.party.postalAddress.buildingName.value": { "text": "Bina/Site adı", "type": "string", "col": 3 },
-							"deliveryCustomerParty.party.postalAddress.buildingNumber.value": { "text": "Bina No", "type": "string", "col": 2 },
-							"deliveryCustomerParty.party.postalAddress.blockName.value": { "text": "Blok adı", "type": "string", "col": 2 },
-							"deliveryCustomerParty.party.postalAddress.room.value": { "text": "Daire", "type": "string", "col": 2 },
-							"deliveryCustomerParty.party.postalAddress.district.value": { "text": "İlçe", "type": "string", "col": 3 },
-							"divisor1": { "type": "w-100" },
-							"deliveryCustomerParty.party.postalAddress.cityName.value": { "text": "Şehir", "type": "string", "col": 3 },
-							"deliveryCustomerParty.party.postalAddress.region.value": { "text": "Bölge", "type": "string", "col": 3 },
-							"deliveryCustomerParty.party.postalAddress.postalZone.value": { "text": "Posta Kodu", "type": "string", "col": 2 },
-							"deliveryCustomerParty.party.postalAddress.country.identificationCode.value": {
-								"text": "Ülke",
-								"type": "lookup",
-								"staticValues": "countryList",
-								"col": 3,
-								"onchange": "countryCode_changed('deliveryCustomerParty.party.')"
-							},
-							"deliveryCustomerParty.party.postalAddress.country.name.value": { "text": "Ülke İsmi", "type": "hidden" }
-						}
-					},
-					"iletisim": {
-						"text": "İletişim",
-						"collapsed": true,
-						"fields": {
-							"deliveryCustomerParty.party.contact.telephone.value": {
-								"text": "Telefon",
-								"type": "string",
-								"col": 2
-							},
-							"deliveryCustomerParty.party.contact.telefax.value": {
-								"text": "Fax",
-								"type": "string",
-								"col": 2
-							},
-							"deliveryCustomerParty.party.contact.electronicMail.value": {
-								"text": "E-Mail",
-								"type": "string",
-								"col": 4
-							},
-							"deliveryCustomerParty.party.websiteURI.value": {
-								"text": "Web sitesi",
-								"type": "string",
-								"col": 4
-							}
-						}
-					}
-				}
-			},
+			"cari": { "text": "Müşteri Bilgileri", "type": "widget", "widget": "customerParty", "grouped": true, "collapsed": false, "prefix": "deliveryCustomerParty.party.", "col": 12 },
 			"despatchLine": {
 				"text": "Satırlar",
 				"type": "grid",

@@ -65,7 +65,7 @@
 		"CNY": "CNY",
 		"RON": "RON"
 	},
-	"eInvoiceStatusTypes": {
+	"invoiceStatusTypes": {
 		"Draft": "Taslak",
 		"Pending": "Bekliyor",
 		"Queued": "Kuyrukta",
@@ -76,14 +76,14 @@
 		"WaitingForApprovement": "Onay bekliyor",
 		"Error": "Hata"
 	},
-	"eInvoiceProfileIdList": {
+	"invoiceProfileIdList": {
 		"TEMELFATURA": "Temel",
 		"TICARIFATURA": "Ticari",
 		"IHRACAT": "İhracat",
 		"YOLCUBERABERFATURA": "Yolcu beraber",
 		"EARSIVFATURA": "e-Arşiv"
 	},
-	"eInvoiceTypeCodeList": {
+	"invoiceTypeCodeList": {
 		"SATIS": "Satış",
 		"IADE": "İade",
 		"TEVKIFAT": "Tevkifat",

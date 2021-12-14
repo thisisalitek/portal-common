@@ -10,10 +10,10 @@
 				"type": "remote",
 				"method": "GET",
 				"url": "/dbapi/customers",
-				"label": "{partyName.name.value}"
+				"label": "${partyName.name.value}"
 			},
 			"lookupTextField": "${prefix}partyName.name.value",
-			"onchange": "cariKart_changed('buyerCustomerParty')"
+			"onchange": "cariKart_changed('${prefix}')"
 		},
 		"${prefix}person.firstName.value": { "text": "Şahıs Adı", "type": "string","col": 3 },
 		"${prefix}person.familyName.value": { "text": "Şahıs Soyadı", "type": "string", "col": 3 },

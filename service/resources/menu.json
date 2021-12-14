@@ -4,7 +4,7 @@
 		"nodes":[
 			{"module":"orders.outbox", "text":"Siparişler", "path":"/order/outbox", "icon":"fas fa-file-alt"},
 			{"module":"orders.waitingSaleOrders",	"text":"Bekleyen Siparişler",	"path":"/order/outbox-waiting-orders", "icon":"fas fa-business-time"},
-			{"module":"despatch.outbox", "text":"Giden İrsaliyeler",	"path":"/despatch/outbox", "icon":"fas fa-table"},
+			{"module":"despatch.outbox", "text":"Giden İrsaliyeler",	"path":"/despatch/outbox", "icon":"fas fa-truck-moving"},
 			{"module":"invoice.outbox", "text":"Giden Faturalar", "path":"/invoice/outbox", "icon":"fas fa-table"},
 			{"module":"finance.customers", "text":"Müşteriler", "path":"/finance/customers", "icon":"fas fa-users"},
 			{"module":"finance.vendors", "text":"Tedarikçiler", "path":"/finance/vendors", "icon":"fas fa-parachute-box"}
@@ -13,7 +13,7 @@
 	{"text":"Satın alma",	"icon":"fas fa-shopping-bag",
 		"nodes":[
 			{"module":"orders.inbox", "text":"Alım Siparişleri", "path":"/order/inbox", "icon":"fas fa-file-alt"},
-			{"module":"despatch.inbox", "text":"Gelen İrsaliyeler",	"path":"/despatch/inbox", "icon":"fas fa-table"},
+			{"module":"despatch.inbox", "text":"Gelen İrsaliyeler",	"path":"/despatch/inbox", "icon":"fas fa-truck-moving flip"},
 			{"module":"invoice.inbox", "text":"Gelen Faturalar",	 "path":"/invoice/inbox", "icon":"fas fa-table"},
 			{"module":"finance.customers", "text":"Müşteriler", "path":"/finance/customers", "icon":"fas fa-users"},
 			{"module":"finance.vendors", "text":"Tedarikçiler", "path":"/finance/vendors", "icon":"fas fa-parachute-box"}

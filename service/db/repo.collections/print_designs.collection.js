@@ -3,7 +3,7 @@ module.exports=function(dbModel){
 	let schema = mongoose.Schema({
 
 		module: {type :String, trim:true, required: true, index:true},        
-		function: {type :String, trim:true, required: true, index:true},        
+		func: {type :String, trim:true, required: true, index:true},        
 		name: {type :String, trim:true, default:'', index:true},
 		design: {type :String, default:''},
 		createdDate: { type: Date,default: Date.now, index:true},

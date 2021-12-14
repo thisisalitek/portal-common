@@ -7,7 +7,7 @@
 			"text": "Vergiler",
 			"col": 6,
 			"showHeader": false,
-			"class":"border-0",
+			"class111":"border-0",
 			"fields": {
 				"taxTotal.taxSubtotal": {
 					"type": "grid",

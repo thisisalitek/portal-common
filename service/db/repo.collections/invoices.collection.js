@@ -106,18 +106,11 @@ module.exports=function(dbModel){
 		modifiedDate:{ type: Date,default: Date.now}
 	})
 
-schema.pre('save', (next)=>{
-	if(this.invoiceLine){
-		this.lineCountNumeric.value=this.invoiceLine.length
-	}
-	next()
-})
+schema.pre('save', (next)=>{ next() })
 
 schema.pre('remove', (next)=>next())
 schema.pre('remove', true, (next, done)=>next())
-schema.on('init', (model)=>{
-	console.log(`schema init:`,collectionName)
-})
+schema.on('init', (model)=>{})
 schema.plugin(mongoosePaginate)
 schema.plugin(mongooseAggregatePaginate)
 

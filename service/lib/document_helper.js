@@ -2,7 +2,7 @@
 exports.yeniFaturaNumarasi=function(dbModel,eIntegratorDoc,newInvoice,cb){
 	if(newInvoice.ID.value!='') return cb(null,newInvoice)
 	if(newInvoice.issueDate.value.length!=10) return cb(null,newInvoice)
-	var prefix=''
+	let prefix=''
 	if(eIntegratorDoc.invoice){
 		if(newInvoice.ioType==0){
 			prefix=eIntegratorDoc.invoice.prefixOutbox
@@ -12,15 +12,16 @@ exports.yeniFaturaNumarasi=function(dbModel,eIntegratorDoc,newInvoice,cb){
 
 	}
 	if(prefix.length!=3) return cb(null,newInvoice)
-	var yil = newInvoice.issueDate.value.substr(0,4)
+	let yil = newInvoice.issueDate.value.substr(0,4)
 
 	dbModel.invoices.find({ioType:newInvoice.ioType, 'ID.value':{'$regex': prefix + yil + '.*','$options':'i'} }).sort({'ID.value':-1}).limit(1).exec((err,docs)=>{
 		if(!err){
-			var yeniNo=0
-			var docNum=prefix + yil
+			let yeniNo=0
+			let docNum=prefix + yil
 			if(docs.length>0){
-				var s=docs[0].ID.value.substr(7)
-				if(!isNaN(s)) yeniNo=Number(s)
+				let s=docs[0].ID.value.substr(7)
+				if(!isNaN(s)) 
+					yeniNo=Number(s)
 			}
 			yeniNo++
 			if(yeniNo.toString().length<9)
@@ -41,9 +42,9 @@ exports.kontrolImportEArsiv=function(dbModel,eIntegratorDoc,newInvoice,cb){
 	try{
 		if(newInvoice.profileId.value == 'IHRACAT' || newInvoice.profileId.value == 'YOLCUBERABERFATURA' || newInvoice.profileId.value =='EARSIVFATURA') return cb(null,newInvoice)
 
-		var vergiNo=''
+		let vergiNo=''
 		newInvoice.accountingCustomerParty.party.partyIdentification.forEach((e)=>{
-			var schemeID=(e.ID.attr.schemeID || '').toUpperCase()
+			let schemeID=(e.ID.attr.schemeID || '').toUpperCase()
 			if(schemeID=='VKN' || schemeID=='TCKN'){
 				vergiNo=e.ID.value
 				return
@@ -72,12 +73,12 @@ exports.kontrolImportEArsiv=function(dbModel,eIntegratorDoc,newInvoice,cb){
 exports.insertEInvoice=function(dbModel,eIntegratorDoc,connectorResult,callback){
 	try{
 		eventLog('insertEInvoice started')
-		var connInvoices
+		let connInvoices
 		if(typeof connectorResult=='string'){
 			connInvoices=JSON.parse(connectorResult)
 		}
 
-		var invoices=[]
+		let invoices=[]
 		if(Array.isArray(connInvoices)){
 			invoices=connInvoices
 		}else{
@@ -98,19 +99,19 @@ exports.insertEInvoice=function(dbModel,eIntegratorDoc,connectorResult,callback)
 			e=util.amountValueFixed2Digit(e,'')
 		})
 
-		var index=0
+		let index=0
 		function kaydet(cb){
 			if(index>=invoices.length) return cb(null)
 			dbModel.invoices.findOne({ioType:0, localDocumentId:{$ne:''},localDocumentId:invoices[index].localDocumentId},(err,doc)=>{
 				if(!err){
 					if(doc==null){
-						var tempInvoice=(new dbModel.invoices(invoices[index])).toJSON()
+						let tempInvoice=(new dbModel.invoices(invoices[index])).toJSON()
 						tempInvoice=util.deleteObjectFields(tempInvoice,["_id","__v","createdDate","modifiedDate",'eIntegrator', "pdf", "html"])
 						tempInvoice=util.deleteObjectProperty(tempInvoice,'_id')
 
-						var data1=util.eDocumentSetCurrencyIDs(tempInvoice,tempInvoice.documentCurrencyCode.value)
+						let data1=util.eDocumentSetCurrencyIDs(tempInvoice,tempInvoice.documentCurrencyCode.value)
 						data1['eIntegrator']=eIntegratorDoc._id
-						var newEInvoice=new dbModel.invoices(data1)
+						let newEInvoice=new dbModel.invoices(data1)
 
 						exports.yeniFaturaNumarasi(dbModel,eIntegratorDoc,newEInvoice,(err,newEInvoice2)=>{
 							eInvoiceHelper.kontrolImportEArsiv(dbModel,eIntegratorDoc,newEInvoice2,(err,newEInvoice3)=>{
@@ -161,7 +162,7 @@ exports.yeniIrsaliyeNumarasi=function(dbModel,eIntegratorDoc,newDespatch,cb){
 		return cb(null,newDespatch)
 	if(newDespatch.issueDate.value.length!=10)
 		return cb(null,newDespatch)
-	var prefix=''
+	let prefix=''
 	if(eIntegratorDoc.despatch){
 		if(newDespatch.ioType==0){
 			prefix=eIntegratorDoc.despatch.prefixOutbox
@@ -172,14 +173,14 @@ exports.yeniIrsaliyeNumarasi=function(dbModel,eIntegratorDoc,newDespatch,cb){
 	}
 	if(prefix.length!=3)
 		return cb(null,newDespatch)
-	var yil = newDespatch.issueDate.value.substr(0,4)
+	let yil = newDespatch.issueDate.value.substr(0,4)
 
 	dbModel.despatches.find({ioType:newDespatch.ioType, 'ID.value':{'$regex': prefix + yil + '.*','$options':'i'} }).sort({'ID.value':-1}).limit(1).exec((err,docs)=>{
 		if(!err){
-			var yeniNo=0
-			var docNum=prefix + yil
+			let yeniNo=0
+			let docNum=prefix + yil
 			if(docs.length>0){
-				var s=docs[0].ID.value.substr(7)
+				let s=docs[0].ID.value.substr(7)
 				if(!isNaN(s))
 					yeniNo=Number(s)
 			}
@@ -203,7 +204,7 @@ exports.yeniIrsaliyeYanitNumarasi=function(dbModel,eIntegratorDoc,newReceiptAdvi
 		return cb(null,newReceiptAdvice)
 	if(newReceiptAdvice.issueDate.value.length!=10)
 		return cb(null,newReceiptAdvice)
-	var prefix=''
+	let prefix=''
 	if(eIntegratorDoc.despatch){
 		if(newReceiptAdvice.ioType==0){
 			prefix=eIntegratorDoc.despatch.prefixReceiptAdviceOutbox || 'TES'
@@ -214,14 +215,14 @@ exports.yeniIrsaliyeYanitNumarasi=function(dbModel,eIntegratorDoc,newReceiptAdvi
 	}
 	if(prefix.length!=3)
 		return cb(null,newReceiptAdvice)
-	var yil = newReceiptAdvice.issueDate.value.substr(0,4)
+	let yil = newReceiptAdvice.issueDate.value.substr(0,4)
 
 	dbModel.despatches_receipt_advice.find({ioType:newReceiptAdvice.ioType, 'ID.value':{'$regex': prefix + yil + '.*','$options':'i'} }).sort({'ID.value':-1}).limit(1).exec((err,docs)=>{
 		if(!err){
-			var yeniNo=0
-			var docNum=prefix + yil
+			let yeniNo=0
+			let docNum=prefix + yil
 			if(docs.length>0){
-				var s=docs[0].ID.value.substr(7)
+				let s=docs[0].ID.value.substr(7)
 				if(!isNaN(s)) yeniNo=Number(s)
 			}
 			yeniNo++
@@ -244,7 +245,7 @@ exports.insertEDespatch=function(dbModel,eIntegratorDoc,connectorResult,callback
 	try{
 
 		eventLog('insertEDespatch started')
-		var connDespatches
+		let connDespatches
 		if(typeof connectorResult=='string'){
 			if(connectorResult.trim()=='')
 				return callback({code:'IMPORT_ERROR',message:'Iceri alinacak kayit gorunmuyor'})
@@ -252,7 +253,7 @@ exports.insertEDespatch=function(dbModel,eIntegratorDoc,connectorResult,callback
 		}
 		
 
-		var despatches=[]
+		let despatches=[]
 		if(Array.isArray(connDespatches)){
 			despatches=connDespatches
 		}else{
@@ -273,13 +274,13 @@ exports.insertEDespatch=function(dbModel,eIntegratorDoc,connectorResult,callback
 			//e=util.amountValueFixed2Digit(e,'')
 		})
 
-		var index=0
+		let index=0
 		function kaydet(cb){
 			if(index>=despatches.length) return cb(null)
 			dbModel.despatches.findOne({ioType:0, localDocumentId:{$ne:''},localDocumentId:despatches[index].localDocumentId},(err,doc)=>{
 				if(!err){
 					if(doc==null){
-						var tempDespatch=(new dbModel.despatches(despatches[index])).toJSON()
+						let tempDespatch=(new dbModel.despatches(despatches[index])).toJSON()
 						tempDespatch=util.deleteObjectFields(tempDespatch,["_id","__v","createdDate","modifiedDate",'eIntegrator', "pdf", "html"])
 						tempDespatch=util.deleteObjectProperty(tempDespatch,'_id')
 
@@ -343,7 +344,7 @@ exports.insertEDespatch=function(dbModel,eIntegratorDoc,connectorResult,callback
 
 exports.findDefaultEIntegrator=function(dbModel,eIntegratorId,callback){
 
-	var filter={passive:false}
+	let filter={passive:false}
 	if(eIntegratorId){
 		filter['_id']=eIntegratorId
 	}
@@ -351,8 +352,8 @@ exports.findDefaultEIntegrator=function(dbModel,eIntegratorId,callback){
 		if(!err){
 			if(docs.length==0) return callback({code:'RECORD_NOT_FOUND',message:'Aktif GIB entegrator bulunamadi'})
 			if(docs.length==1) return callback(null,docs[0])
-			var bFoundDefault=false
-			var foundDoc
+			let bFoundDefault=false
+			let foundDoc
 			docs.forEach((e)=>{
 				if(e.isDefault){
 					bFoundDefault=true
@@ -373,7 +374,7 @@ exports.findDefaultEIntegrator=function(dbModel,eIntegratorId,callback){
 exports.yeniSiparisNumarasi=function(dbModel,eIntegratorDoc,newOrder,cb){
 	if(newOrder.ID.value!='') return cb(null,newOrder)
 	if(newOrder.issueDate.value.length!=10) return cb(null,newOrder)
-	var prefix=''
+	let prefix=''
 	if(eIntegratorDoc.order){
 		if(newOrder.ioType==0){
 			prefix=eIntegratorDoc.order.prefixOutbox
@@ -383,14 +384,14 @@ exports.yeniSiparisNumarasi=function(dbModel,eIntegratorDoc,newOrder,cb){
 
 	}
 	if(prefix.length!=3) return cb(null,newOrder)
-	var yil = newOrder.issueDate.value.substr(0,4)
+	let yil = newOrder.issueDate.value.substr(0,4)
 
 	dbModel.orders.find({ioType:newOrder.ioType, 'ID.value':{'$regex': prefix + yil + '.*','$options':'i'} }).sort({'ID.value':-1}).limit(1).exec((err,docs)=>{
 		if(!err){
-			var yeniNo=0
-			var invoiceNum=prefix + yil
+			let yeniNo=0
+			let invoiceNum=prefix + yil
 			if(docs.length>0){
-				var s=docs[0].ID.value.substr(7)
+				let s=docs[0].ID.value.substr(7)
 				if(!isNaN(s)) yeniNo=Number(s)
 			}
 			yeniNo++
@@ -414,7 +415,7 @@ exports.yeniUretimNumarasi=function(dbModel,newProductionOrder,cb){
 
 	dbModel.production_orders.find({productionId:{$ne:''} }).sort({productionId:-1}).limit(1).exec((err,docs)=>{
 		if(!err){
-			var yeniNo='000000'
+			let yeniNo='000000'
 			if(docs.length>0){
 				yeniNo=docs[0].productionId
 			}
@@ -432,7 +433,7 @@ exports.yeniUretimNumarasi=function(dbModel,newProductionOrder,cb){
 exports.yeniIrsaliyeNumarasi=function(dbModel,eIntegratorDoc,newDespatch,cb){
 	if(newDespatch.ID.value!='') return cb(null,newDespatch)
 	if(newDespatch.issueDate.value.length!=10) return cb(null,newDespatch)
-	var prefix=''
+	let prefix=''
 	if(eIntegratorDoc.despatch){
 		if(newDespatch.ioType==0){
 			prefix=eIntegratorDoc.despatch.prefixOutbox
@@ -442,14 +443,14 @@ exports.yeniIrsaliyeNumarasi=function(dbModel,eIntegratorDoc,newDespatch,cb){
 
 	}
 	if(prefix.length!=3) return cb(null,newDespatch)
-	var yil = newDespatch.issueDate.value.substr(0,4)
+	let yil = newDespatch.issueDate.value.substr(0,4)
 
 	dbModel.despatches.find({ioType:newDespatch.ioType, 'ID.value':{'$regex': prefix + yil + '.*','$options':'i'} }).sort({'ID.value':-1}).limit(1).exec((err,docs)=>{
 		if(!err){
-			var yeniNo=0
-			var invoiceNum=prefix + yil
+			let yeniNo=0
+			let invoiceNum=prefix + yil
 			if(docs.length>0){
-				var s=docs[0].ID.value.substr(7)
+				let s=docs[0].ID.value.substr(7)
 				if(!isNaN(s)) yeniNo=Number(s)
 			}
 			yeniNo++
@@ -470,7 +471,7 @@ exports.yeniIrsaliyeNumarasi=function(dbModel,eIntegratorDoc,newDespatch,cb){
 exports.yeniStokFisNumarasi=function(dbModel,newInventoryFiche,cb){
 	if((newInventoryFiche.docId || '').trim()!='') return cb(null,newInventoryFiche)
 
-	var prefix='ST'
+	let prefix='ST'
 
 	dbModel.inventory_fiches.find({docId:{'$regex': prefix + '.*','$options':'i'} }).sort({docId:-1}).limit(1).exec((err,docs)=>{
 		if(!err){

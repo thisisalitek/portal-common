@@ -1,0 +1,91 @@
+{
+	"index": [{
+			"type": "filter",
+			"fields": {
+				"tarih": { "text": "Tarih", "type": "dateRange" },
+				"profileId.value": { "text": "Senaryo", "type": "lookup", "staticValues": "invoiceProfileIdList", "col": 2 },
+				"invoiceTypeCode.value": { "text": "Tipi", "type": "lookup", "staticValues": "invoiceTypeCodeList", "col": 2 }
+			}
+		},
+		{
+			"type": "grid",
+			"fields": {
+				"ID": { "text": "ID", "type": "string", "visible": false },
+				"invoiceNo": { "text": "Fatura No", "type": "string", "html": "<b>${ID}</b><br>${localDocumentId}", "width": "140px" },
+				"tarih": { "text": "Tarih", "type": "string", "html": "${issueDate}<br><small class=\"text-primary\">${issueTime}</small>", "width": "130px" },
+				"musteri": { "text": "Müşteri", "type": "string", "filterField": "partyName", "html": "<b>${party.title}</b><br><small class=\"text-primary\">${party.vknTckn}</small> | Satır:${lineCountNumeric}" },
+				"totals": { "text": "Toplamlar", "type": "string", "filter": false, "class": "text-end", "headerClass": "text-end", "html": "<span class=\"bold text-primary\" title=\"Vergiler dahil toplam\">${Number(legalMonetaryTotal.taxInclusiveAmount.value).formatMoney()} ${documentCurrencyCode.value=='TRY'?'TL':documentCurrencyCode.value}</span><br><span class=\"small\" title=\"Vergiler hariç toplam\">VHTT : ${Number(legalMonetaryTotal.taxExclusiveAmount.value).formatMoney()} ${documentCurrencyCode.value=='TRY'?'TL':documentCurrencyCode.value}</span>" },
+				"invoiceStatus": { "text": "Durum", "type": "lookup", "staticValues": "invoiceStatusTypes","headerClass":"ps-3", "html": "<span class=\"ms-2 badge badge-status status-${invoiceStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/invoice/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>" }
+			},
+			"options": {
+				"selection": true,
+				"filter": true,
+				"buttons": { "add": true, "edit": true, "delete": true, "view": false, "print": true, "copy": true }
+			},
+			"dataSource": {
+				"type": "remote",
+				"method": "GET",
+				"url": "/dbapi/invoice/outbox",
+				"deleteUrl": "/dbapi/invoice",
+				"copyUrl": "/dbapi/invoice/copy",
+				"printUrl": "/dbapi/invoice/print"
+			}
+		}
+	],
+	"form": [{
+		"type": "form",
+		"fields": {
+			"ioType": { "type": "hidden", "dataType": "number", "value": 0 },
+			"baslik": { "text": "Belge Bilgileri", "type": "widget", "widget": "invoiceTitle", "grouped": true, "collapsed": false, "prefix": "", "col": 12 },
+			"cari": { "text": "Müşteri Bilgileri", "type": "widget", "widget": "customerParty", "grouped": true, "collapsed": false, "prefix": "accountingCustomerParty.party.", "col": 12 },
+			"invoiceLine": { "text": "Satırlar", "type": "widget", "widget": "invoiceLine", "grouped": true, "collapsed": false, "prefix": "", "col": 12 },
+			"group1": { "text": "Toplamlar", "type": "widget", "widget": "monetaryTotal", "grouped": true, "collapsed": false, "prefix": "legalMonetaryTotal.", "col": 12 },
+			"note": { "text": "Notlar/Bilgiler", "type": "widget", "widget": "note", "grouped": true, "collapsed": false, "prefix": "", "col": 12 }
+		},
+		"dataSource": { "method": "GET", "url": "/dbapi/invoice" }
+	}],
+	"print": [{
+		"type": "html",
+		"text": "print data",
+		"dataSource": {
+			"method": "GET",
+			"url": "/dbapi/invoice/print"
+		}
+	}],
+	"status": [{
+		"type": "form",
+		"fields": {
+			"invoiceStatus": { "text": "Belge Durumu", "type": "string", "readonly": true },
+			"invoiceErrors": {
+				"type": "grid",
+				"text": "Hatalar",
+				"fields": {
+					"_date": { "text": "Tarih Saat", "type": "datetime" },
+					"code": { "text": "Kod", "type": "string" },
+					"message": { "text": "Açıklama", "type": "string" }
+				}
+			},
+			"islem": {
+				"text": "İşlem",
+				"type": "group",
+				"collapsed": true,
+				"fields": {
+					"localStatus": { "text": "İşlem Durum", "type": "string", "readonly": true },
+					"localErrors": {
+						"type": "grid",
+						"text": "İşlem Hataları",
+						"fields": {
+							"_date": { "text": "Tarih Saat", "type": "datetime" },
+							"code": { "text": "Kod", "type": "string" },
+							"message": { "text": "Açıklama", "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"dataSource": {
+			"method": "GET",
+			"url": "/dbapi/invoice"
+		}
+	}]
+}
