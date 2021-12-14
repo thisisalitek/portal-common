@@ -4,7 +4,6 @@ module.exports=function(dbModel){
 		palletType: {type: mongoose.Schema.Types.ObjectId, ref: 'items', mdl:dbModel['items'], required: [true,'Palet tipi gereklidir.'], index:true},
 		name: {type: String, trim:true, required: [true,'isim gereklidir.'] , unique:true},
 		location: {type: mongoose.Schema.Types.ObjectId, ref: 'locations', mdl:dbModel['locations'], default:null},
-		subLocation: {type: mongoose.Schema.Types.ObjectId, ref: 'sub_locations', mdl:dbModel['sub_locations'], default:null},
 		pack:[{
 			item: {type: mongoose.Schema.Types.ObjectId, ref: 'items', mdl:dbModel['items'], default:null},
 			lotNo: {type: String, trim:true, default:'' , index:true},

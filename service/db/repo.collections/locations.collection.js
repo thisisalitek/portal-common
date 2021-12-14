@@ -23,7 +23,16 @@ module.exports=function(dbModel){
 	schema.plugin(mongooseAggregatePaginate)
 	let model=dbModel.conn.model(collectionName, schema)
 	model.removeOne=(member, filter,cb)=>{ sendToTrash(dbModel,collectionName,member,filter,cb) }
-  model.relations={pos_devices:'location',machines:'location'}
+  model.relations={
+    pos_devices:'location',
+    machines:'location',
+    despatches:'location',
+    despatches:'location2', 
+    inventory_fiches:'location',
+    inventory_fiches:'location2',
+    invoices:'location',
+    mrp_stations:'location'
+  }
   
   return model
 }
