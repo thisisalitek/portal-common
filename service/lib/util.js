@@ -1213,7 +1213,7 @@ exports.renameInvoiceObjects = (obj, renameFunction) => {
 }
 
 global.tempLog = (fileName, text) => {
-	if(config.status != 'development')
+	if(config.status != 'release')
 		return
 	var tmpDir = os.tmpdir()
 	if(config) {
