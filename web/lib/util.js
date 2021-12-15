@@ -1074,7 +1074,7 @@ global.assetVersion = (sourceFileName) => {
 	return obj.fileName + '?v=' + obj.version;
 }
 
-if(typeof dberr == 'undefined')
+if(typeof dberr == 'undefined') {
 	global.dberr = (err, cb) => {
 		if(!err) {
 			return true
@@ -1088,8 +1088,9 @@ if(typeof dberr == 'undefined')
 			}
 		}
 	}
+}
 
-if(typeof dbnull == 'undefined')
+if(typeof dbnull == 'undefined') {
 	global.dbnull = (doc, cb, msg = 'Kayıt bulunamadı') => {
 		if(doc != null) {
 			return true
@@ -1104,3 +1105,19 @@ if(typeof dbnull == 'undefined')
 			}
 		}
 	}
+}
+
+global.getBaseURI = function(req) {
+	let burasi = req.headers['x-forwarded-host'] || req.headers['x-forwarded-server'] || req.headers['host'] || ''
+	burasi += req.originalUrl || req.url || ''
+	console.log(`getBaseURI:`, burasi)
+	return burasi
+}
+
+global.getBaseURIHost = function(req) {
+	let burasi = req.headers['x-forwarded-host'] || req.headers['x-forwarded-server'] || req.headers['host'] || ''
+	return burasi
+}
+global.getBaseURIUrl = function(req) {
+	return req.originalUrl || req.url || ''
+}

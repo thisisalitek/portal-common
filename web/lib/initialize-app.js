@@ -69,8 +69,7 @@ module.exports=(cb)=>{
 	console.log(`${'Version:'.padding(25)} ${(config.version || '').yellow}`)
 	console.log(`${'Http Port:'.padding(25)} ${(config.httpserver.port).toString().yellow}`)
 
-	if(config.base_uri)
-		console.log(`${'Base URI:'.padding(25)} ${config.base_uri.cyan}`)
+
 	if(config.api)
 		console.log(`${'API URI:'.padding(25)} ${config.api.url.brightYellow}`)
 	if(config.login)

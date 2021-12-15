@@ -1774,3 +1774,17 @@ global.loadJSONFile=(fileName)=>{
 	return JSON.parse(s)
 }
 
+
+global.getBaseURI = function(req) {
+	let burasi = req.headers['x-forwarded-host'] || req.headers['x-forwarded-server'] || req.headers['host'] || ''
+	burasi += req.originalUrl || req.url || ''
+	return burasi
+}
+
+global.getBaseURIHost = function(req) {
+	let burasi = req.headers['x-forwarded-host'] || req.headers['x-forwarded-server'] || req.headers['host'] || ''
+	return burasi
+}
+global.getBaseURIUrl = function(req) {
+	return req.originalUrl || req.url || ''
+}
