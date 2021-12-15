@@ -31,10 +31,6 @@
 				"name":{"text":"Adı", "type":"string"},
 				"parameters":{"text":"Parametreler(JSON format)", "type":"json"}
 			},
-			"options": {
-				"mode": "general",
-				"isForm":true
-			},
 			"dataSource": {
 				"method":"GET",
 				"url":"/dbapi/mrp-machine-groups"

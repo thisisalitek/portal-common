@@ -7,9 +7,7 @@ module.exports=function(dbModel){
 		issueTime: { type: String, trim:true, default: '00:00:00.0000000+03:00'},
 		productionOrderId: {type: mongoose.Schema.Types.ObjectId, ref: 'production_orders', mdl:dbModel['production_orders'], default:null},
 		location: {type: mongoose.Schema.Types.ObjectId, ref: 'locations', mdl:dbModel['locations'], default:null},
-		subLocation: {type: mongoose.Schema.Types.ObjectId,  default:null},
 		location2: {type: mongoose.Schema.Types.ObjectId, ref: 'locations', mdl:dbModel['locations'], default:null},
-		subLocation2: {type: mongoose.Schema.Types.ObjectId, default:null},
 		description:{type: String, trim:true, default: ''},
 		docLine:[{
 			sequence:{ type: Number, default: 0},

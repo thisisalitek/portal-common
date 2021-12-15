@@ -43,10 +43,6 @@
 				"div1":{"type":"w-100"},
 				"passive":{"text":"Pasif?", "type":"boolean", "col":4}
 			},
-			"options": {
-				"mode": "general",
-				"isForm":true
-			},
 			"dataSource": {
 				"method":"GET",
 				"url":"/dbapi/mrp-process-steps"

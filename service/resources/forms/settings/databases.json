@@ -43,7 +43,7 @@
 							"dataSource":{
 								"method":"GET",
 								"url":"/api/members",
-								"label":"{username} {name} {lastName}"
+								"label":"${username} ${name} ${lastName}"
 							}
 						},
 						"canRead" :{"text":"Okuyabilir?", "type":"boolean"},
@@ -64,10 +64,6 @@
 						}
 					}
 				}
-			},
-			"options": {
-				"mode": "general",
-				"isForm":true
 			},
 			"dataSource": {
 				"method":"GET",

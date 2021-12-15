@@ -101,10 +101,6 @@
 					"col":4
 				}
 			},
-			"options": {
-				"mode": "general",
-				"isForm":true
-			},
 			"dataSource": {
 				"method":"GET",
 				"url":"/dbapi/account-groups"

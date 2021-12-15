@@ -56,10 +56,6 @@
 					}
 				}
 			},
-			"options": {
-				"mode": "general",
-				"isForm":true
-			},
 			"dataSource": {
 				"method":"GET",
 				"url":"/dbapi/shifts"

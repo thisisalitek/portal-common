@@ -87,7 +87,7 @@
 								"type":"remote",
 								"method":"GET",
 								"url":"/dbapi/accounts",
-								"label":"{accountCode} {name}"
+								"label":"${accountCode} ${name}"
 							},
 							"required":true
 						},
@@ -120,10 +120,6 @@
 						"fark" :{"text":"Fark", "type":"money","col":2 ,"readonly":true }
 					}
 				}
-			},
-			"options": {
-				"mode": "general",
-				"isForm":true
 			},
 			"dataSource": {
 				"method":"GET",

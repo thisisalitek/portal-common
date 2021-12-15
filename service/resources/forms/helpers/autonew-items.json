@@ -154,10 +154,6 @@
 					}
 				}
 			],
-			"options": {
-				"mode": "general",
-				"isForm":true
-			},
 			"dataSource": {
 				"method":"GET",
 				"url":"/dbapi/autonew-items"

@@ -100,7 +100,7 @@
 								"type":"remote",
 								"method":"GET",
 								"url":"/dbapi/items?itemType=all",
-								"label":"{name.value} {description.value}"
+								"label":"${name.value} ${description.value}"
 							},
 							"lookupTextField":"item.name.value",
 							"displayFormat":"{item.name.value} - {item.description.value}",
@@ -154,10 +154,6 @@
 						}
 					}
 				}
-			},
-			"options": {
-				"mode": "general",
-				"isForm":true
 			},
 			"dataSource": {
 				"method":"GET",

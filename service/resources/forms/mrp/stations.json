@@ -52,10 +52,6 @@
 				"description":{"text":"Açıklama", "type":"string","col":12},
 				"passive":{"text":"Pasif?", "type":"boolean","col":4}
 			},
-			"options": {
-				"mode": "general",
-				"isForm":true
-			},
 			"dataSource": {
 				"method":"GET",
 				"url":"/dbapi/mrp-stations"

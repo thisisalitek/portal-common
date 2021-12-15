@@ -33,26 +33,50 @@ global.sendToTrash = (dbModel, collectionName, member, filter, cb) => {
 			}
 
 			if(conn.model(collectionName).relations) {
-				var keys = Object.keys(conn.model(collectionName).relations)
-				var index = 0
-
+				let relations = conn.model(collectionName).relations
+				let keys = Object.keys(relations)
+				let index = 0
+				let errorList=[]
 				function kontrolEt(cb2) {
 					if(index >= keys.length) {
 						cb2(null)
 					} else {
-						var relationFilter = {}
-						var k = keys[index]
-
-						relationFilter[conn.model(collectionName).relations[k]] = doc._id
-						conn.model(k).countDocuments(relationFilter, (err, c) => {
+						repoDbModel(dbModel._id, (err, mdl) => {
 							if(!err) {
-								if(c > 0) {
-									cb2({ name: 'RELATION_ERROR', message: "Bu kayit '" + k + "' tablosuna baglidir. Silemezsiniz!" })
-
-								} else {
-									index++
-									setTimeout(kontrolEt, 0, cb2)
+								let k = keys[index]
+								let relationFilter
+								let errMessage = `Bu kayit <b>${k}</b> tablosuna baglidir.`
+								if(Array.isArray(relations[k])) {
+									if(relations[k].length > 0)
+										if(typeof relations[k][0] == 'string') {
+											relationFilter = {}
+											relationFilter[relations[k][0]] = doc._id
+											if(relations[k].length > 1)
+												if(typeof relations[k][1] == 'string') errMessage = relations[k][1]
+										}
+								} else if(typeof relations[k] == 'object') {
+									if(relations[k].field){
+										relationFilter = {}
+										relationFilter[relations[k].field] = doc._id
+										if(relations[k].filter)	Object.assign(relationFilter,relations[k].filter)
+										if(relations[k].message) errMessage=relations[k].message
+									}
 								}
+
+								if(!relationFilter) {
+									relationFilter = {}
+									relationFilter[relations[k]] = doc._id
+								}
+
+								mdl[k].countDocuments(relationFilter, (err, c) => {
+									if(!err) {
+										if(c > 0) errorList.push(`${errMessage} ${c} Kayıt`)
+										index++
+										setTimeout(kontrolEt, 0, cb2)
+									} else {
+										cb2(err)
+									}
+								})
 							} else {
 								cb2(err)
 							}
@@ -61,11 +85,12 @@ global.sendToTrash = (dbModel, collectionName, member, filter, cb) => {
 				}
 
 				kontrolEt((err) => {
-					if(!err) {
+					if(!err && errorList.length==0) {
 						silelim(cb)
 					} else {
-
-						cb(err)
+						errorList.unshift('<b>Bağlı kayıt(lar) var. Silemezsiniz!</b>')
+						if(err) errorList.push(err.message)
+						cb({name:'RELATION_ERROR',message:errorList.join('\n')})
 					}
 				})
 			} else {
@@ -97,7 +122,7 @@ global.dbnull = (doc, cb, msg = 'Kayıt bulunamadı') => {
 	if(doc != null) {
 		return true
 	} else {
-		var err = { code: 'RECORD_NOT_FOUND', message: msg }
+		let err = { code: 'RECORD_NOT_FOUND', message: msg }
 		if(!cb) {
 			throw err
 			return false
@@ -109,10 +134,10 @@ global.dbnull = (doc, cb, msg = 'Kayıt bulunamadı') => {
 }
 
 global.epValidateSync = (doc, cb) => {
-	var err = doc.validateSync()
+	let err = doc.validateSync()
 	if(err) {
-		var keys = Object.keys(err.errors)
-		var returnError = { code: 'HATALI_VERI', message: '' }
+		let keys = Object.keys(err.errors)
+		let returnError = { code: 'HATALI_VERI', message: '' }
 		keys.forEach((e, index) => {
 			returnError.message += `#${(index+1).toString()} : ${err.errors[e].message}`
 			if(index < keys.length - 1)
@@ -317,13 +342,13 @@ global.repoDbModel = function(_id, cb) {
 
 function moduleLoader(folder, suffix, expression, cb) {
 	try {
-		var moduleHolder = {}
-		var files = fs.readdirSync(folder)
+		let moduleHolder = {}
+		let files = fs.readdirSync(folder)
 		files.forEach((e) => {
 			let f = path.join(folder, e)
 			if(!fs.statSync(f).isDirectory()) {
-				var fileName = path.basename(f)
-				var apiName = fileName.substr(0, fileName.length - suffix.length)
+				let fileName = path.basename(f)
+				let apiName = fileName.substr(0, fileName.length - suffix.length)
 				if(apiName != '' && (apiName + suffix) == fileName) {
 					moduleHolder[apiName] = require(f)
 				}
@@ -347,8 +372,8 @@ global.runServiceOnAllUserDb = (options) => {
 	try {
 		options.repeatInterval = options.repeatInterval || 60000
 
-		var serviceName = options.name || app.get('name')
-		var filter = { deleted: false, passive: false }
+		let serviceName = options.name || app.get('name')
+		let filter = { deleted: false, passive: false }
 		filter = Object.assign({}, filter, (options.filter || {}))
 
 		if(!calisanServiceDatabaseler[serviceName]) {
@@ -366,7 +391,7 @@ global.runServiceOnAllUserDb = (options) => {
 								if(!err) {
 									dbModel.t = (new Date()).getTime()
 									options.serviceFunc(dbModel, (err) => {
-										var fark = (((new Date()).getTime()) - dbModel.t) / 1000
+										let fark = (((new Date()).getTime()) - dbModel.t) / 1000
 										if(!err) {
 											eventLog(`${dbModel.dbName.padding(20).brightBlue} ${serviceName.yellow} finished in ${fark.toString().yellow} sn`)
 										} else {
@@ -401,7 +426,7 @@ global.runServiceOnAllUserDb = (options) => {
 
 
 global.dbStats = function(doc, cb) {
-	var conn
+	let conn
 	switch (doc.userDbHost) {
 		case config.mongodb.server1:
 			conn = serverConn1.useDb(doc.userDb)

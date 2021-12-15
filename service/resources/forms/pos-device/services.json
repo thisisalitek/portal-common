@@ -40,10 +40,6 @@
 				"url" 				: {"text":"Url", "type":"string"},
 				"passive" 				: {"text":"Pasif?", "type":"boolean"}
 			},
-			"options": {
-				"mode": "general",
-				"isForm":true
-			},
 			"dataSource": {
 				"method":"GET",
 				"url":"/dbapi/pos-device-services"
