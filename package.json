@@ -1,18 +1,18 @@
 {
-	"name": "portal-common-lib",
+	"name": "portal-common",
 	"version": "1.0.0",
 	"description": "Gany Portal Common Library and Shared Resources",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/shamancoders/portal-common-lib.git"
+		"url": "git+https://github.com/shamancoders/portal-common.git"
 	},
 	"keywords": [],
 	"author": "Shaman Coders",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/shamancoders/portal-common-lib/issues"
+		"url": "https://github.com/shamancoders/portal-common/issues"
 	},
-	"homepage": "https://github.com/shamancoders/portal-common-lib#readme",
+	"homepage": "https://github.com/shamancoders/portal-common#readme",
 	"silinenPaketler": {
 		"bcrypt-nodejs": "*",
 		"beepbeep": "^1.3.0",
