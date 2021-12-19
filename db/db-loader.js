@@ -210,7 +210,7 @@ function baglan(collectionFolder, mongoAddress, dbObj, cb) {
 	if(collectionFolder && mongoAddress && !dbObj.conn) {
 		moduleLoader(path.join(__dirname, collectionFolder), '.collection.js', ``, (err, holder) => {
 			if(!err) {
-				dbObj.conn = mongoose.createConnection(mongoAddress, { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: true })
+				dbObj.conn = mongoose.createConnection(mongoAddress, { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: false })
 				dbObj.conn.on('connected', () => {
 					Object.keys(holder).forEach((key) => {
 						dbObj[key] = holder[key](dbObj.conn)

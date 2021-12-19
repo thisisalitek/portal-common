@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 
 const valueType = { value: { type: String, trim: true, default: '' } }
-const valueIndexedType = { value: { type: String, trim: true, default: '', index: true } }
 
 const idType = { value: { type: String, trim: true, default: '' }, attr: { schemeID: { type: String, trim: true, default: '' } } }
-const idIndexedType = { value: { type: String, trim: true, default: '', index: true }, attr: { schemeID: { type: String, trim: true, default: '' } } }
 
 const numberValueType = { value: { type: Number, default: 0 } }
 const booleanValueType = { value: { type: Boolean, default: false } }
@@ -87,24 +85,6 @@ const personType = {
 	financialAccount: financialAccountType,
 	identityDocumentReference: documentReferenceType,
 	nationalityId: idType
-}
-
-const addressIndexedType = {
-	room: valueType,
-	streetName: valueIndexedType,
-	blockName: valueType,
-	buildingName: valueType,
-	buildingNumber: valueType,
-	citySubdivisionName: valueType,
-	cityName: valueIndexedType,
-	postalZone: valueType,
-	postbox: valueType,
-	region: valueIndexedType,
-	district: valueIndexedType,
-	country: {
-		identificationCode: valueIndexedType,
-		name: valueIndexedType
-	}
 }
 
 const addressType = {
@@ -763,9 +743,7 @@ function optional(objType) {
 
 module.exports = Object.freeze({
 	valueType: valueType,
-	valueIndexedType: valueIndexedType,
 	idType: idType,
-	idIndexedType: idIndexedType,
 	numberValueType: numberValueType,
 	amountType: amountType,
 	quantityType: quantityType,
@@ -795,7 +773,6 @@ module.exports = Object.freeze({
 	orderLineReferenceType: orderLineReferenceType,
 	deliveryType: deliveryType,
 	addressType: addressType,
-	addressIndexedType: addressIndexedType,
 	locationType: locationType,
 	despatchType: despatchType,
 	shipmentType: shipmentType,

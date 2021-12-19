@@ -125,21 +125,19 @@ module.exports = function(dbModel) {
 	schema.plugin(mongoosePaginate)
 	schema.plugin(mongooseAggregatePaginate)
 
-	schema.index({
-		"ioType": 1,
-		"ID.value": 1,
-		"issueDate.value": 1,
-		"uuid.value": 1,
-		"eIntegrator": 1,
-		"profileId.value": 1,
-		"orderTypeCode.value": 1,
-		"documentCurrencyCode.value": 1,
-		"localDocumentId": 1,
-		"orderStatus": 1,
-		"localStatus": 1,
-		"createdDate": 1
-	})
-
+	schema.index({ 'ioType': 1 })
+	schema.index({ 'ID.value': 1, })
+	schema.index({ 'issueDate.value': 1 })
+	schema.index({ 'uuid.value': 1 })
+	schema.index({ 'eIntegrator': 1 })
+	schema.index({ 'profileId.value': 1 })
+	schema.index({ 'orderTypeCode.value': 1 })
+	schema.index({ 'documentCurrencyCode.value': 1 })
+	schema.index({ 'localDocumentId': 1 })
+	schema.index({ 'orderStatus': 1 })
+	schema.index({ 'localStatus': 1 })
+	schema.index({ 'createdDate': 1 })
+	
 
 	let model = dbModel.conn.model(collectionName, schema)
 	model.removeOne = (member, filter, cb) => { sendToTrash(dbModel, collectionName, member, filter, cb) }

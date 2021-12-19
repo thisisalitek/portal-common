@@ -27,19 +27,18 @@ module.exports=function(dbModel){
 	schema.plugin(mongoosePaginate)
 	schema.plugin(mongooseAggregatePaginate)
 	
-	schema.index({
-		'firstName.value':1,
-		'middleName.value':1,
-		'familyName.value':1,
-		'nameSuffix.value':1,
-		'title.value':1,
-		'bloodGroup':1,
-		'account':1,
-		'shift':1,
-		'station':1,
-		"passive":1,
-		"createdDate":1
-	})
+
+	schema.index({'firstName.value':1,})
+	schema.index({'middleName.value':1,})
+	schema.index({'familyName.value':1,})
+	schema.index({'nameSuffix.value':1,})
+	schema.index({'title.value':1,})
+	schema.index({'bloodGroup':1,})
+	schema.index({'account':1,})
+	schema.index({'shift':1,})
+	schema.index({'station':1,})
+	schema.index({"passive":1,})
+	schema.index({"createdDate":1})
 
 	let model=dbModel.conn.model(collectionName, schema)
 	model.removeOne=(member, filter,cb)=>{ sendToTrash(dbModel,collectionName,member,filter,cb) }

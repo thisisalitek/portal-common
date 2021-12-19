@@ -45,19 +45,17 @@ module.exports=function(dbModel){
 	schema.on('init', (model)=>{})
 	schema.plugin(mongoosePaginate)
 
-	schema.index({
-		"partyName.name.value":1,
-		"partyType":1,
-		"passive":1,
-		"postalAddress.province.value":1,
-		"postalAddress.cityName.value":1,
-		"person.firstName.value":1,
-		"person.middleName.value":1,
-		"person.familyName.value":1,
-		"createdDate":1,
-		"tags":1
-	})
-
+	schema.index({ "partyName.name.value": 1 })
+	schema.index({ "partyType": 1 })
+	schema.index({ "passive": 1 })
+	schema.index({ "postalAddress.province.value": 1 })
+	schema.index({ "postalAddress.cityName.value": 1 })
+	schema.index({ "person.firstName.value": 1 })
+	schema.index({ "person.middleName.value": 1 })
+	schema.index({ "person.familyName.value": 1 })
+	schema.index({ "createdDate": 1 })
+	schema.index({ "tags": 1 })
+	
 	let model=dbModel.conn.model(collectionName, schema)
 	model.removeOne=(member, filter,cb)=>{ sendToTrash(dbModel,collectionName,member,filter,cb) }
 
