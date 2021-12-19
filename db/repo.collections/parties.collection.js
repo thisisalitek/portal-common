@@ -21,7 +21,7 @@ module.exports=function(dbModel){
 		partyName:{
 			name:{value:{ type: String, trim:true, required:[true,'Isim gereklidir'], default: ''}}
 		},
-		postalAddress:dbType.addressType,
+		postalAddress:dbType.addressIndexedType,
 		partyTaxScheme:{
 			taxScheme:{
 				name:dbType.valueType,
