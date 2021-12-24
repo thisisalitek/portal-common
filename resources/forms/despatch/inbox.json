@@ -9,14 +9,49 @@
 		},
 		{
 			"type": "grid",
-			"fields": {
-				"ID": { "text": "ID", "type": "string", "visible": false },
-				"despatchNo": { "text": "Irs. No", "type": "string", "html": "<b>${ID}</b><br>${localDocumentId}", "width": "140px" },
-				"tarih": { "text": "Tarih", "type": "string", "html": "${issueDate}<br><small class=\"text-primary\">${issueTime}</small>", "width": "130px" },
-				"musteri": { "text": "Müşteri", "type": "string", "filterField": "partyName", "html": "<b>${party.title}</b><br><small class=\"text-primary\">${party.vknTckn}</small> | Satır:{lineCountNumeric}" },
-				"despatchStatus": { "text": "GİB Status", "type": "lookup", "staticValues": "despatchStatusTypes", "html": "<a class=\"badge-status status-${despatchStatus.toLowerCase()} \" href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','İşlem Durumları','900','600')\">${valueText}</a>" },
-				"receiptAdvice.receiptStatus": { "text": "Teslim", "type": "lookup", "staticValues": "receiptStatusTypes" },
-				"localStatus": { "text": "İşlem", "type": "lookup", "staticValues": "localStatusTypes", "html": "<a class=\"badge-status status-${localStatus} \" href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','İşlem Durumları','900','600')\">${valueText}</a>" }
+		"fields": {
+				"ID": {
+					"text": "ID",
+					"type": "string",
+					"visible": false
+				},
+				"despatchNo": {
+					"text": "Irs. No",
+					"type": "string",
+					"html": "<b>${ID.value}</b><br>${localDocumentId}",
+					"width": "140px"
+				},
+				"tarih": {
+					"text": "Tarih",
+					"type": "string",
+					"html": "${issueDate.value}<br><small class=\"text-primary\">${issueTime.value}</small>",
+					"filter": false
+				},
+				"musteri": {
+					"text": "Müşteri",
+					"type": "string",
+					"filterField": "partyName",
+					"html": "<b>${despatchSupplierParty.party.partyName.name.value || (despatchSupplierParty.party.person.firstName.value + ' ' + despatchSupplierParty.party.person.familyName.value)}</b><br><small class=\"text-primary\">${despatchSupplierParty.party.partyIdentification.map((e)=>{ return (e.ID.attr.schemeID + ' : ' + e.ID.value) }).join(', ')}</small> | Satır:${lineCountNumeric.value}"
+				},
+				"despatchStatus": {
+					"text": "GİB Status",
+					"type": "lookup",
+					"staticValues": "despatchStatusTypes",
+					"headerClass":"ps-3",
+					"html": "<span class=\"ms-2 badge badge-status status-${despatchStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
+				},
+				"receiptAdvice.receiptStatus": {
+					"text": "Teslim",
+					"type": "lookup",
+					"staticValues": "receiptStatusTypes"
+				},
+				"localStatus": {
+					"text": "İşlem",
+					"type": "lookup",
+					"staticValues": "localStatusTypes",
+					"headerClass":"ps-3",
+					"html": "<span class=\"badge badge-status status-${localStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
+				}
 			},
 			"options": {
 				"selection": true,

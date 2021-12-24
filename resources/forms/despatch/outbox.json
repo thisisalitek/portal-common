@@ -31,20 +31,20 @@
 				"despatchNo": {
 					"text": "Irs. No",
 					"type": "string",
-					"html": "<b>${ID}</b><br>${localDocumentId}",
+					"html": "<b>${ID.value}</b><br>${localDocumentId}",
 					"width": "140px"
 				},
 				"tarih": {
 					"text": "Tarih",
 					"type": "string",
-					"html": "${issueDate}<br><small class=\"text-primary\">${issueTime}</small>",
+					"html": "${issueDate.value}<br><small class=\"text-primary\">${issueTime.value}</small>",
 					"filter": false
 				},
 				"musteri": {
 					"text": "Müşteri",
 					"type": "string",
 					"filterField": "partyName",
-					"html": "<b>${party.title}</b><br><small class=\"text-primary\">${party.vknTckn}</small> | Satır:${lineCountNumeric}"
+					"html": "<b>${deliveryCustomerParty.party.partyName.name.value || (deliveryCustomerParty.party.person.firstName.value + ' ' + deliveryCustomerParty.party.person.familyName.value)}</b><br><small class=\"text-primary\">${deliveryCustomerParty.party.partyIdentification.map((e)=>{ return (e.ID.attr.schemeID + ' : ' + e.ID.value) }).join(', ')}</small> | Satır:${lineCountNumeric.value}"
 				},
 				"despatchStatus": {
 					"text": "GİB Status",
