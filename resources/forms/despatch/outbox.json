@@ -1,69 +1,47 @@
 {
 	"index": [{
 			"type": "filter",
+			"collapsed": true,
 			"fields": {
-				"tarih": {
-					"text": "Tarih",
-					"type": "dateRange"
-				},
-				"profileId.value": {
-					"text": "Senaryo",
-					"type": "lookup",
-					"staticValues": "despatchProfileIdList",
-					"col": 2
-				},
-				"despatchAdviceTypeCode.value": {
-					"text": "Tipi",
-					"type": "lookup",
-					"staticValues": "despatchAdviceTypeCodeList",
-					"col": 2
-				}
+				"tarih": { "text": "Tarih", "type": "dateRange" },
+				"profileId.value": { "text": "Senaryo", "type": "lookup", "staticValues": "despatchProfileIdList", "col": 2 },
+				"despatchAdviceTypeCode.value": { "text": "Tipi", "type": "lookup", "staticValues": "despatchAdviceTypeCodeList", "col": 2 }
 			}
 		},
 		{
 			"type": "grid",
 			"fields": {
-				"ID": {
-					"text": "ID",
-					"type": "string",
-					"visible": false
-				},
-				"despatchNo": {
-					"text": "Irs. No",
-					"type": "string",
-					"html": "<b>${ID.value}</b><br>${localDocumentId}",
-					"width": "140px"
-				},
-				"tarih": {
-					"text": "Tarih",
-					"type": "string",
-					"html": "${issueDate.value}<br><small class=\"text-primary\">${issueTime.value}</small>",
-					"filter": false
-				},
+				"ID.value": { "text": "ID", "type": "string", "visible": false },
+				"despatchNo": { "text": "Irs. No", "type": "string", "html": "<b>${ID.value}</b>${localDocumentId?'<br><small>' + localDocumentId + '</small>':''}<br><div class=\"text-nowrap\" ><span class=\"status bg-${profileId.value.toLowerCase()}\">${staticValues.despatchProfileIdList[profileId.value] || profileId.value}</span><span class=\"ms-2 status bg-${despatchAdviceTypeCode.value.toLowerCase()}\">${staticValues.despatchAdviceTypeCodeList[despatchAdviceTypeCode.value] || despatchAdviceTypeCode.value}</span></div>", "width": "140px" },
+				"tarih": { "text": "Tarih", "type": "string", "width": "100px", "html": "${issueDate.value}<br><small class=\"text-primary\">${issueTime.value.substr(0,8)}</small>", "filter": false },
 				"musteri": {
 					"text": "Müşteri",
 					"type": "string",
 					"filterField": "partyName",
-					"html": "<b>${deliveryCustomerParty.party.partyName.name.value || (deliveryCustomerParty.party.person.firstName.value + ' ' + deliveryCustomerParty.party.person.familyName.value)}</b><br><small class=\"text-primary\">${deliveryCustomerParty.party.partyIdentification.map((e)=>{ return (e.ID.attr.schemeID + ' : ' + e.ID.value) }).join(', ')}</small> | Satır:${lineCountNumeric.value}"
+					"html": "<b>${deliveryCustomerParty.party.partyName.name.value || (deliveryCustomerParty.party.person.firstName.value + ' ' + deliveryCustomerParty.party.person.familyName.value)}</b><br><small class=\"text-primary\">${deliveryCustomerParty.party.partyIdentification.map((e)=>{ return (e.ID.attr.schemeID + ' : ' + e.ID.value) }).join(', ')} | Satır:${lineCountNumeric.value}</small>"
 				},
 				"despatchStatus": {
 					"text": "GİB Status",
 					"type": "lookup",
+					"width": "110px",
 					"staticValues": "despatchStatusTypes",
-					"headerClass":"ps-3",
-					"html": "<span class=\"ms-2 badge badge-status status-${despatchStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
+					"headerClass": "",
+					"html": "<a class=\"status bg-${despatchStatus.toLowerCase()}\" href=\"javascript:popupCenter('#/despatch/outbox/logs/${_id}?view=plain','Log Kayıtları','900','600')\" title=\"GİB Log Kayıtları icin tiklayiniz\">${valueText}</a>"
 				},
 				"receiptAdvice.receiptStatus": {
 					"text": "Teslim",
+					"visible": false,
 					"type": "lookup",
-					"staticValues": "receiptStatusTypes"
+					"staticValues": "receiptStatusTypes",
+					"html": "<span class=\"status bg-${(receiptAdvice.receiptStatus || '').toLowerCase()}\">${valueText}</span>"
 				},
 				"localStatus": {
 					"text": "İşlem",
 					"type": "lookup",
+					"width": "100px",
 					"staticValues": "localStatusTypes",
-					"headerClass":"ps-3",
-					"html": "<span class=\"badge badge-status status-${localStatus.toLowerCase()} \"><a href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\">${valueText}</a></span>"
+					"headerClass": "",
+					"html": "<a class=\"status bg-${(localStatus==''?'draft':localStatus).toLowerCase()}\" href=\"javascript:popupCenter('#/despatch/outbox/status/${_id}?view=plain','Log Kayıtları','900','600')\" title=\"Local işlem durumları icin tiklayiniz\">${valueText}</a>"
 				}
 			},
 			"options": {
@@ -97,7 +75,6 @@
 					}
 				}
 			}
-
 		}
 	],
 	"form": [{
@@ -109,205 +86,27 @@
 				"text": "Gönderi Bilgileri",
 				"collapsed": true,
 				"fields": {
-					"shipment.shipmentStage.0.driverPerson.0.firstName.value": {
-						"text": "Sürücü Adı",
-						"type": "string",
-						"col": 3
-					},
-					"shipment.shipmentStage.0.driverPerson.0.familyName.value": {
-						"text": "Sürücü Soyadı",
-						"type": "string",
-						"col": 3
-					},
-					"shipment.shipmentStage.0.driverPerson.0.nationalityId.value": {
-						"text": "Sürü TCKN",
-						"type": "string",
-						"col": 3
-					},
-					"shipment.shipmentStage.0.transportMeans.roadTransport.licensePlateId.value": {
-						"text": "Araç Plakası",
-						"type": "string",
-						"col": 3
-					}
+					"shipment.shipmentStage.0.driverPerson.0.firstName.value": { "text": "Sürücü Adı", "type": "string", "col": 3 },
+					"shipment.shipmentStage.0.driverPerson.0.familyName.value": { "text": "Sürücü Soyadı", "type": "string", "col": 3 },
+					"shipment.shipmentStage.0.driverPerson.0.nationalityId.value": { "text": "Sürü TCKN", "type": "string", "col": 3 },
+					"shipment.shipmentStage.0.transportMeans.roadTransport.licensePlateId.value": { "text": "Araç Plakası", "type": "string", "col": 3 }
 				}
 			},
 			"cari": { "text": "Müşteri Bilgileri", "type": "widget", "widget": "customerParty", "grouped": true, "collapsed": false, "prefix": "deliveryCustomerParty.party.", "col": 12 },
-			"despatchLine": {
-				"text": "Satırlar",
-				"type": "grid",
-				"fields": {
-					"ID.value": {
-						"text": "#",
-						"type": "identity",
-						"readonly": true,
-						"width": "50px"
-					},
-					"item._id": {
-						"text": "Mal/Hizmet",
-						"type": "remoteLookup",
-						"dataSource": {
-							"type": "remote",
-							"method": "GET",
-							"url": "/dbapi/items?itemType=all",
-							"label": "${name.value} ${description.value}"
-						},
-						"lookupTextField": "item.name.value",
-						"displayFormat": "${item.name.value} - ${item.description.value}",
-						"required": true
-					},
-					"deliveredQuantity.value": {
-						"text": "Miktar",
-						"type": "number",
-						"required": true
-					},
-					"deliveredQuantity.attr.unitCode": {
-						"text": "Birim",
-						"type": "lookup",
-						"staticValues": "unitCodeList",
-						"required": true,
-						"lastRecord": true
-					},
-					"note.0.value": {
-						"text": "SatırNot 1",
-						"type": "string"
-					},
-					"note.1.value": {
-						"text": "SatırNot 2",
-						"type": "string"
-					},
-					"note.2.value": {
-						"text": "SatırNot 3",
-						"type": "string"
-					}
-				},
-				"modal": {
-					"tabs": [{
-							"text": "Satir bilgileri",
-							"fields": {
-								"ID.value": {
-									"text": "#",
-									"type": "identity",
-									"readonly": true,
-									"width": "50px",
-									"col": 1
-								},
-								"item._id": {
-									"text": "Mal/Hizmet",
-									"type": "remoteLookup",
-									"dataSource": {
-										"type": "remote",
-										"method": "GET",
-										"url": "/dbapi/items?itemType=all",
-										"label": "${name.value} ${description.value}"
-									},
-									"lookupTextField": "item.name.value",
-									"required": true,
-									"col": 5
-								},
-								"deliveredQuantity.value": {
-									"text": "Miktar",
-									"type": "number",
-									"required": true,
-									"col": 3
-								},
-								"deliveredQuantity.attr.unitCode": {
-									"text": "Birim",
-									"type": "lookup",
-									"staticValues": "unitCodeList",
-									"required": true,
-									"col": 3
-								}
-							}
-						},
-						{
-							"text": "Diğer",
-							"fields": {
-								"note": {
-									"type": "grid",
-									"text": "Satır Notları",
-									"fields": {
-										"value": {
-											"text": "Not",
-											"type": "string"
-										}
-									},
-									"options": {
-										"selection": false,
-										"filter": false,
-										"confirmBeforeRemove": false,
-										"buttons": {
-											"add": true,
-											"edit": true,
-											"delete": true,
-											"view": false,
-											"print": false,
-											"copy": false
-										}
-									}
-								}
-							}
-						}
-					]
-
-				},
-				"options": {
-					"selection": false,
-					"filter": false,
-					"confirmBeforeRemove": true,
-					"buttons": {
-						"add": true,
-						"edit": true,
-						"delete": true,
-						"view": false,
-						"print": false,
-						"copy": false
-					}
-				},
-				"onchange": "toplamlariGuncelle(this)"
-			},
+			"despatchLine": { "text": "Satırlar", "type": "widget", "widget": "despatchLine", "grouped": true, "collapsed": false, "prefix": "", "col": 12 },
 			"group1": {
 				"text": "Toplamlar",
 				"fields": {
-					"toplamMiktar": {
-						"text": "Toplam Miktar",
-						"type": "number",
-						"readonly": true,
-						"col": "col-sm-4 offset-sm-8 col-md-2 offset-md-10"
-					}
+					"toplamMiktar": { "text": "Toplam Miktar", "type": "number", "readonly": true, "col": "col-sm-4 offset-sm-8 col-md-2 offset-md-10" }
 				}
 			},
-			"note": {
-				"text": "Notlar",
-				"type": "grid",
-				"fields": {
-					"value": {
-						"text": "Not",
-						"type": "string"
-					}
-				},
-				"options": {
-					"selection": false,
-					"filter": false,
-					"confirmBeforeRemove": false,
-					"buttons": {
-						"add": true,
-						"edit": true,
-						"delete": true,
-						"view": false,
-						"print": false,
-						"copy": false
-					}
-				}
-			}
+			"note": { "text": "Notlar/Bilgiler", "type": "widget", "widget": "note", "grouped": true, "collapsed": false, "prefix": "", "col": 12 }
 		},
 		"options": {
 			"mode": "general",
 			"isForm": true
 		},
-		"dataSource": {
-			"method": "GET",
-			"url": "/dbapi/despatch"
-		},
+		"dataSource": { "url": "/dbapi/despatch" },
 		"script": [
 			"function toplamlariGuncelle(grid){",
 			"//console.log('toplamlari guncelle grid:',grid)",
@@ -321,75 +120,28 @@
 		]
 
 	}],
-	"print": [{
-		"type": "html",
-		"noGroup": true,
-		"text": "print data",
-		"dataSource": {
-			"method": "GET",
-			"url": "/dbapi/despatch/print"
-		}
-	}],
+	"print": [{ "type": "html", "noGroup": true, "text": "print data", "dataSource": { "url": "/dbapi/despatch/print" } }],
 	"status": [{
 		"type": "form",
 		"fields": {
-			"despatchStatus": {
-				"text": "Belge Durumu",
-				"type": "string",
-				"readonly": true
-			},
-			"despatchErrors": {
+			"localStatus": { "text": "İşlem Durum", "type": "string", "class": "bold fs-125 font-monospace text-uppercase", "readonly": true },
+			"localErrors": { "text": "İşlemler", "type": "widget", "widget": "localErrors", "grouped": false, "collapsed": false, "prefix": "", "col": 12 }
+		},
+		"dataSource": { "url": "/dbapi/despatch" }
+	}],
+	"logs": [{
+		"type": "form",
+		"fields": {
+			"statusEnum": { "text": "Belge Durumu", "type": "lookup", "staticValues": "despatchStatusTypes", "class": "bold fs-125 font-monospace text-uppercase", "readonly": true },
+			"logs": {
 				"type": "grid",
-				"text": "Hatalar",
+				"class": "font-monospace",
 				"fields": {
-					"_date": {
-						"text": "Tarih Saat",
-						"type": "datetime"
-					},
-					"code": {
-						"text": "Kod",
-						"type": "string"
-					},
-					"message": {
-						"text": "Açıklama",
-						"type": "string"
-					}
-				}
-			},
-			"islem": {
-				"text": "İşlem",
-				"type": "group",
-				"collapsed": true,
-				"fields": {
-					"localStatus": {
-						"text": "İşlem Durum",
-						"type": "string",
-						"readonly": true
-					},
-					"localErrors": {
-						"type": "grid",
-						"text": "İşlem Hataları",
-						"fields": {
-							"_date": {
-								"text": "Tarih Saat",
-								"type": "datetime"
-							},
-							"code": {
-								"text": "Kod",
-								"type": "string"
-							},
-							"message": {
-								"text": "Açıklama",
-								"type": "string"
-							}
-						}
-					}
+					"createDateUtc": { "text": "Tarih Saat", "type": "string", "width": "120px", "class": "text-nowrap mx-1", "html": "${(new Date(createDateUtc)).yyyymmddhhmmss(' ',true)}" },
+					"message": { "text": "Mesaj", "type": "string" }
 				}
 			}
 		},
-		"dataSource": {
-			"method": "GET",
-			"url": "/dbapi/despatch"
-		}
+		"dataSource": { "url": "/dbapi/despatch/logs" }
 	}]
 }

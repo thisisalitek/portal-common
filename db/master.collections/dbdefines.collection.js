@@ -31,6 +31,7 @@ module.exports = function(conn) {
 		},
 		createdDate: { type: Date, default: Date.now },
 		modifiedDate: { type: Date, default: Date.now },
+		dbStats: {},
 		version: { type: String, default: "", index: true },
 		deleted: { type: Boolean, default: false, index: true },
 		passive: { type: Boolean, default: false, index: true }

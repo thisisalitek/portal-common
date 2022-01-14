@@ -108,6 +108,9 @@
 	"orderProfileIdList": {
 		"TEMELSIPARIS": "Temel Sipariş"
 	},
+	"despatchProfileIdList": {
+		"TEMELIRSALIYE": "Temel"
+	},
 	"despatchAdviceTypeCodeList": {
 		"SEVK": "Sevk",
 		"MATBUDAN": "Matbudan"
@@ -142,9 +145,6 @@
 		"SentToGib": "GİB e iletildi",
 		"Success": "Başarılı",
 		"Error": "Hata"
-	},
-	"despatchProfileIdList": {
-		"TEMELIRSALIYE": "Temel"
 	},
 	"productionTypeCodeList": {
 		"MUSTERI": "Müşteri",

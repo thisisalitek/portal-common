@@ -1,18 +1,17 @@
 {
-	"index":[
-		{
-			"type":"form",
-			"fields":{
-				"aciklama":{"type":"html","value":"Son 90 gün içindeki bildirimler"}
+	"index": [{
+			"type": "form",
+			"fields": {
+				"aciklama": { "type": "warning", "class":"bold", "text": "Son 90 gün içindeki bildirimler" }
 			}
 		},
 		{
 			"type": "grid",
 			"fields": {
-				"status":{"text":"Durum", "type":"string"},
-				"createdDate":{"text":"Tarih", "type":"datetime","width":"150px"},
-				"text":{"text":"Açıklama", "type":"string"},
-				"isRead":{"text":"Okundu?", "type":"boolean"}
+				"status": { "text": "Durum", "type": "string" },
+				"createdDate": { "text": "Tarih", "type": "datetime", "width": "150px" },
+				"text": { "text": "Açıklama", "type": "string" },
+				"isRead": { "text": "Okundu?", "type": "boolean" }
 			},
 			"options": {
 				"selection": true,
@@ -27,29 +26,27 @@
 				}
 			},
 			"dataSource": {
-				"type":"remote",
-				"method":"GET",
-				"url":"/dbapi/notifications"
+				"type": "remote",
+				"method": "GET",
+				"url": "/dbapi/notifications"
 			}
 		}
 	],
-	"form": [
-		{
-			"type":"form",
-			"fields": {
-				"status":{"text":"Durum", "type":"string"},
-				"createdDate":{"text":"Tarih", "type":"datetime"},
-				"text":{"text":"Açıklama", "type":"strings"},
-				"isRead":{"text":"Okundu?", "type":"boolean"}
-			},
-			"options": {
-				"mode": "view",
-				"isForm":true
-			},
-			"dataSource": {
-				"method":"GET",
-				"url":"/dbapi/notifications"
-			}
+	"form": [{
+		"type": "form",
+		"fields": {
+			"status": { "text": "Durum", "type": "string" },
+			"createdDate": { "text": "Tarih", "type": "datetime" },
+			"text": { "text": "Açıklama", "type": "strings" },
+			"isRead": { "text": "Okundu?", "type": "boolean" }
+		},
+		"options": {
+			"mode": "view",
+			"isForm": true
+		},
+		"dataSource": {
+			"method": "GET",
+			"url": "/dbapi/notifications"
 		}
-	]
+	}]
 }

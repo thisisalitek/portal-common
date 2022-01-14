@@ -372,7 +372,7 @@ global.runServiceOnAllUserDb = (options) => {
 	try {
 		options.repeatInterval = options.repeatInterval || 60000
 
-		let serviceName = options.name || app.get('name')
+		let serviceName = options.name || config.name || ''
 		let filter = { deleted: false, passive: false }
 		filter = Object.assign({}, filter, (options.filter || {}))
 
@@ -383,7 +383,7 @@ global.runServiceOnAllUserDb = (options) => {
 		function calistir() {
 			db.dbdefines.find(filter).select('_id').exec((err, docs) => {
 				if(!err) {
-					eventLog(`${serviceName.yellow} ${docs.length.toString().brightBlue} adet veri ambari uzerinde calisiyor`)
+					eventLog(`${serviceName.yellow} ${docs.length.toString().brightBlue} adet db uzerinde calisiyor`)
 					docs.forEach((doc) => {
 						if(!calisanServiceDatabaseler[serviceName][doc._id]) {
 							calisanServiceDatabaseler[serviceName][doc._id] = { working: true }
@@ -443,6 +443,8 @@ global.dbStats = function(doc, cb) {
 		return cb(null, {})
 	conn.db.stats((err, statsObj) => {
 		if(!err) {
+			console.log(`${doc.dbName} :`, statsObj)
+			
 			statsObj.dataSizeKb = Number(statsObj.dataSize / 1024).round(2)
 			statsObj.dataSizeMb = Number(statsObj.dataSize / (1024 * 1024)).round(2)
 			statsObj.dataSizeGb = Number(statsObj.dataSize / (1024 * 1024 * 1024)).round(2)
