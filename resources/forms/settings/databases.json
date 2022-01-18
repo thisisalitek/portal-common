@@ -6,7 +6,7 @@
 			"fields": {
 				"dbName":{"text":"Veri Ambarı", "type":"string", "html":"<i class=\"fas fa-database me-1 text-success\"></i><span class=\"${isItMine?'text-primary bold':''}\">${dbName}</span>"},
 				"sahibi":{"text":"Ad Soyad", "type":"string" , "html":"<div class=\"text-primary\">${owner.username}</div>${owner.name} ${owner.lastName}"},
-				"stats.dataSizeText":{"text":"dataSize", "type":"string", "headerClass":"text-end me-1", "class":"text-end me-1"},
+				"dbStats.dataSizeText":{"text":"dataSize", "type":"string", "headerClass":"text-end me-1", "class":"text-end me-1"},
 				"isItMine":{"text":"Benim?", "type":"boolean"},
 				"passive":{"text":"Pasif?", "type":"boolean"}
 			},
