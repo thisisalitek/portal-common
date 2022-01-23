@@ -31,7 +31,7 @@
 		"type": "form",
 		"fields": {
 			"module": { "text": "Modül", "type": "lookup", "staticValues": "modules", "required": true, "col": 4, "help": "/help/qwerty" },
-			"function": { "text": "Fonksiyon", "type": "lookup", "lookup": { "index": "index", "form": "form" }, "required": true, "col": 2, "value": "form", "help": "/help/qwerty" },
+			"func": { "text": "Fonksiyon", "type": "lookup", "lookup": { "index": "index", "form": "form" }, "required": true, "col": 2, "value": "form", "help": "/help/qwerty" },
 			"name": { "text": "Adı", "type": "string", "required": true, "col": 4 },
 			"isDefault": { "text": "Varsayılan?", "type": "boolean", "col": 2 },
 			"design": { "text": "Tasarım (EJS)", "type": "code", "help": "https://ejs.co/" },
