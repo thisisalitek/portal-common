@@ -47,6 +47,7 @@ module.exports = function(dbModel) {
 		despatchErrors: [{ _date: { type: Date, default: Date.now }, code: '', message: '' }],
 		localStatus: { type: String, default: '', enum: ['', 'transferring', 'pending', 'transferred', 'error'], index: true },
 		localErrors: [{ _date: { type: Date, default: Date.now }, code: '', message: '' }],
+		checkedDate: { type: Date, default: Date.now },
 		createdDate: { type: Date, default: Date.now },
 		modifiedDate: { type: Date, default: Date.now }
 	})
