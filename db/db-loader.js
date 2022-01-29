@@ -1,3 +1,5 @@
+'use strict'
+
 global.dbType = require('./db-types')
 
 global.mongoose = require('mongoose')
@@ -370,6 +372,7 @@ function dbNameLog(s) {
 var calisanServiceDatabaseler = {}
 global.runServiceOnAllUserDb = (options) => {
 	try {
+		
 		options.repeatInterval = options.repeatInterval || 60000
 
 		let serviceName = options.name || config.name || ''
@@ -398,12 +401,14 @@ global.runServiceOnAllUserDb = (options) => {
 											errorLog(`${dbModel.dbName.padding(20).brightBlue} ${serviceName.yellow} ${fark.toString().yellow} sn Error:`, err)
 										}
 										dbModel.free()
-										delete dbModel
+										//delete dbModel
 										delete calisanServiceDatabaseler[serviceName][doc._id]
+										
 									})
 								} else {
 									errorLog(`${serviceName.yellow} error:`, err)
 									delete calisanServiceDatabaseler[serviceName][doc._id]
+									
 								}
 							})
 						}
