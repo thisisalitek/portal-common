@@ -18,7 +18,7 @@
 				},
 				"status" 										: {"text":"Durum", "type":"lookup", "lookup":{"waiting":"Bekleyen","error":"Hata","transferred":"Aktarılmış"}},
 				"posDevice.deviceSerialNo" 	: {"text":"Cihaz Seri No", "type":"string"},
-				"zNo" 											: {"text":"zNo", "type":"number"},
+				"zNo" 											: {"text":"zNo", "type":"string", "class":"text-end me-1 bold" , "headerClass":"text-end me-1 bold"},
 				"zDate" 										: {"text":"Tarih", "type":"string"},
 				"zTotal" 										: {"text":"Toplam", "type":"money"},
 				"data" 											: {"text":"Açıklama", "type":"string","filter":false},

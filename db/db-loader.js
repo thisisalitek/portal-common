@@ -16,8 +16,7 @@ global.ObjectId = mongoose.Types.ObjectId
 
 
 global.sendToTrash = (dbModel, collectionName, member, filter, cb) => {
-
-	conn = dbModel.conn
+	let conn = dbModel.conn
 	let recycle = dbModel['recycle']
 
 	conn.model(collectionName).findOne(filter, (err, doc) => {
@@ -38,7 +37,8 @@ global.sendToTrash = (dbModel, collectionName, member, filter, cb) => {
 				let relations = conn.model(collectionName).relations
 				let keys = Object.keys(relations)
 				let index = 0
-				let errorList=[]
+				let errorList = []
+
 				function kontrolEt(cb2) {
 					if(index >= keys.length) {
 						cb2(null)
@@ -57,11 +57,11 @@ global.sendToTrash = (dbModel, collectionName, member, filter, cb) => {
 												if(typeof relations[k][1] == 'string') errMessage = relations[k][1]
 										}
 								} else if(typeof relations[k] == 'object') {
-									if(relations[k].field){
+									if(relations[k].field) {
 										relationFilter = {}
 										relationFilter[relations[k].field] = doc._id
-										if(relations[k].filter)	Object.assign(relationFilter,relations[k].filter)
-										if(relations[k].message) errMessage=relations[k].message
+										if(relations[k].filter) Object.assign(relationFilter, relations[k].filter)
+										if(relations[k].message) errMessage = relations[k].message
 									}
 								}
 
@@ -87,12 +87,12 @@ global.sendToTrash = (dbModel, collectionName, member, filter, cb) => {
 				}
 
 				kontrolEt((err) => {
-					if(!err && errorList.length==0) {
+					if(!err && errorList.length == 0) {
 						silelim(cb)
 					} else {
 						errorList.unshift('<b>Bağlı kayıt(lar) var. Silemezsiniz!</b>')
 						if(err) errorList.push(err.message)
-						cb({name:'RELATION_ERROR',message:errorList.join('\n')})
+						cb({ name: 'RELATION_ERROR', message: errorList.join('\n') })
 					}
 				})
 			} else {
@@ -307,6 +307,9 @@ global.repoDbModel = function(_id, cb) {
 					case config.mongodb.server3:
 						dbModel.conn = serverConn3.useDb(doc.userDb)
 						break
+					default:
+						dbModel.conn = serverConn1.useDb(doc.userDb)
+						break
 				}
 
 				dbModel.free = function() {
@@ -372,7 +375,7 @@ function dbNameLog(s) {
 var calisanServiceDatabaseler = {}
 global.runServiceOnAllUserDb = (options) => {
 	try {
-		
+
 		options.repeatInterval = options.repeatInterval || 60000
 
 		let serviceName = options.name || config.name || ''
@@ -403,12 +406,12 @@ global.runServiceOnAllUserDb = (options) => {
 										dbModel.free()
 										//delete dbModel
 										delete calisanServiceDatabaseler[serviceName][doc._id]
-										
+
 									})
 								} else {
 									errorLog(`${serviceName.yellow} error:`, err)
 									delete calisanServiceDatabaseler[serviceName][doc._id]
-									
+
 								}
 							})
 						}
@@ -449,7 +452,7 @@ global.dbStats = function(doc, cb) {
 	conn.db.stats((err, statsObj) => {
 		if(!err) {
 			console.log(`${doc.dbName} :`, statsObj)
-			
+
 			statsObj.dataSizeKb = Number(statsObj.dataSize / 1024).round(2)
 			statsObj.dataSizeMb = Number(statsObj.dataSize / (1024 * 1024)).round(2)
 			statsObj.dataSizeGb = Number(statsObj.dataSize / (1024 * 1024 * 1024)).round(2)
